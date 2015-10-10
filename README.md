@@ -9,12 +9,16 @@ TODO: Write a project description
 4. Créez un dossier à votre prenom-nom à la racine
 5. Ajoutez-y ce que vous voulez
 6. Pushez ça sur le repo distant.
+
 ## Aide
 1. Aidez vous des cheat sheets dans le dossier 00-Cheat-Sheets
+
 ## History
 TODO: Write history
+
 ## Credits
 TODO: Write credits
+
 ## License
 TODO: Write license
 </content>
