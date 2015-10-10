@@ -1,6 +1,6 @@
 <snippet>
   <content>
-# ${MS Big Data 2015/2016}
+# MS Big Data 2015/2016
 TODO: Write a project description
 ## Installation
 TODO: Describe the installation process
