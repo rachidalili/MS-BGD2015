@@ -10,17 +10,12 @@ TODO: Write a project description
 5. Ajoutez-y ce que vous voulez
 6. Pushez ça sur le repo distant.
 
+## Exercices
+Réalisez ces exercices : https://developers.google.com/edu/python/exercises/basic
+
 ## Aide
-1. Aidez vous des cheat sheets dans le dossier 00-Cheat-Sheets
+Aidez vous des cheat sheets dans le dossier 00-Cheat-Sheets
 
-## History
-TODO: Write history
-
-## Credits
-TODO: Write credits
-
-## License
-TODO: Write license
 </content>
   <tabTrigger>readme</tabTrigger>
 </snippet>
