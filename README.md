@@ -1,6 +1,6 @@
 <snippet>
-  <content><![CDATA[
-# ${1:Project Name}
+  <content>
+# ${MS Big Data 2015/2016}
 TODO: Write a project description
 ## Installation
 TODO: Describe the installation process
@@ -18,6 +18,6 @@ TODO: Write history
 TODO: Write credits
 ## License
 TODO: Write license
-]]></content>
+</content>
   <tabTrigger>readme</tabTrigger>
 </snippet>
