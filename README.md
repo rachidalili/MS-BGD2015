@@ -1,5 +1,4 @@
-<snippet>
-  <content>
+
 # MS Big Data 2015/2016
 TODO: Write a project description
 ## Installation
@@ -16,6 +15,4 @@ Réalisez ces exercices : https://developers.google.com/edu/python/exercises/bas
 ## Aide
 Aidez vous des cheat sheets dans le dossier 00-Cheat-Sheets
 
-</content>
-  <tabTrigger>readme</tabTrigger>
-</snippet>
+
