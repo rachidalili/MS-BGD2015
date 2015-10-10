@@ -3,15 +3,14 @@
 # MS Big Data 2015/2016
 TODO: Write a project description
 ## Installation
-TODO: Describe the installation process
-## Usage
-TODO: Write usage instructions
-## Contributing
-1. Fork it!
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request :D
+1. Creez votre profil Github
+2. Envoyez le à Rachid
+3. Clonez le projet
+4. Créez un dossier à votre prenom-nom à la racine
+5. Ajoutez-y ce que vous voulez
+6. Pushez ça sur le repo distant.
+## Aide
+1. Aidez vous des cheat sheets dans le dossier 00-Cheat-Sheets
 ## History
 TODO: Write history
 ## Credits
