@@ -15,6 +15,7 @@ import seaborn as sns
 from os import mkdir, path
 from mpl_toolkits.mplot3d import Axes3D
 from scipy import stats
+from sklearn import preprocessing
 
 rc('font', **{'family': 'sans-serif', 'sans-serif': ['Computer Modern Roman']})
 params = {'axes.labelsize': 12,
@@ -285,3 +286,17 @@ plt.tight_layout()
 plt.show()
 
 #question 11
+cov_Y_Father= np.cov(y,X['Father'])
+print cov_Y_Father
+cov_Y_Mother = np.cov(y,X['Mother'])
+print cov_Y_Mother
+
+#normailsatoin
+X_scale= preprocessing.scale(X)
+y_scale= preprocessing.scale(y)
+
+#print X_scale[:,1]
+cov_Y_Father= np.cov(y_scale,X_scale[:,0])
+print cov_Y_Father
+cov_Y_Mother = np.cov(y_scale,X_scale[:,1])
+print cov_Y_Mother
