@@ -21,11 +21,11 @@
 # and last chars of the string are the same.
 # Note: python does not have a ++ operator, but += works.
 def match_ends(words):
- wordWithLengthAtLeastTwo = 0
- for word in words:
-   if (len(word) >= 2) and (word[0]==word[-1]):
-     wordWithLengthAtLeastTwo += 1
- return wordWithLengthAtLeastTwo
+    count=0
+    for word in words:
+        if (len(word) >= 2 and (word[0] == word[-1])):
+            count +=1
+    return count
 
 
 # B. front_x
@@ -35,23 +35,17 @@ def match_ends(words):
 # ['xanadu', 'xyz', 'aardvark', 'apple', 'mix']
 # Hint: this can be done by making 2 lists and sorting each of them
 # before combining them.
-#  for word in words: > ne marche pas, il faut éviter de modifier l'itérateur en cours
-#    print word
-#    print words
-#    words.remove(word)
-#    
-    
 def front_x(words):
-  wordsBeginningWithX = []
-  otherWords = []
-  for word in words:# version avec index: for idx, word in enumerate(words):
-    if word[0]=='x':   
-      wordsBeginningWithX.append(word)
-    else:
-      otherWords.append(word)
-  otherWords.sort()
-  wordsBeginningWithX.sort()
-  return (wordsBeginningWithX + otherWords)
+    sortedlist=[]    
+    xsortedlist=[]
+    for word in words:
+        if word[0] == 'x':
+            xsortedlist.append(word)
+        else:
+            sortedlist.append(word)
+    xsortedlist.sort()
+    sortedlist.sort()
+    return xsortedlist+sortedlist
 
 
 
@@ -62,8 +56,8 @@ def front_x(words):
 # [(2, 2), (1, 3), (3, 4, 5), (1, 7)]
 # Hint: use a custom key= function to extract the last element form each tuple.
 def sort_last(tuples):
-  sortedTuples = sorted(tuples, key=lambda unTuple: unTuple[-1])
-  return sortedTuples
+    result= sorted(tuples, key=lambda tuples:tuples[1], reverse=False)
+    return result
 
 
 # Simple provided test() function used in main() to print

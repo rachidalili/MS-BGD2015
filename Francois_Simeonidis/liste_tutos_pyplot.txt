@@ -1,0 +1,16 @@
+Màj 14/10/2015
+
+les généralités :
+http://matplotlib.org/users/pyplot_tutorial.html
+
+"Débuter avec matplotlib" :
+http://matplotlib.free.fr/index.html
+
+"Linear Regression Example" :
+http://scikit-learn.org/stable/auto_examples/linear_model/plot_ols.html
+
+"Boite à outils Python 2.0" :
+http://python.physique.free.fr/index.html
+
+
+
