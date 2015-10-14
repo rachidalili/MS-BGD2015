@@ -13,13 +13,16 @@
 # so [1, 2, 2, 3] returns [1, 2, 3]. You may create a new list or
 # modify the passed in list.
 def remove_adjacent(nums):
-  uniqueNums = set() #unordered collection of unique elements
+  # +++your code here+++
+  # LAB(begin solution)
   result = []
   for num in nums:
-      if num not in uniqueNums: #> much faster than looking accross a dict or a list
-          uniqueNums.add(num)
-          result.append(num) #To provide an ordered result
+    if len(result) == 0 or num != result[-1]:
+      result.append(num)
   return result
+  # LAB(replace solution)
+  # return
+  # LAB(end solution)
 
 
 # E. Given two lists sorted in increasing order, create and return a merged
@@ -27,21 +30,24 @@ def remove_adjacent(nums):
 # Ideally, the solution should work in "linear" time, making a single
 # pass of both lists.
 def linear_merge(list1, list2):
-  i=0#,j=0
-  merging = True
-  while merging:
-    #print i, list1, list2[0]
-    if list1[i] >= list2[0]:
-        list1.insert(i, list2[0])
-        del list2[0]
-        if len(list2) == 0:
-            merging = False
-    else: # si list2[0] est plus grand qu'un élement de list1
-        if i==(len(list1)-1): # s'il s'agit du dernier(plus grand) element
-            list1 = list1 + list2 # alors on concatène
-            merging = False
-    i += 1
-  return list1
+  # +++your code here+++
+  # LAB(begin solution)
+  result = []
+  # Look at the two lists so long as both are non-empty.
+  # Take whichever element [0] is smaller.
+  while len(list1) and len(list2):
+    if list1[0] < list2[0]:
+      result.append(list1.pop(0))
+    else:
+      result.append(list2.pop(0))
+
+  # Now tack on what's left
+  result.extend(list1)
+  result.extend(list2)
+  return result
+  # LAB(replace solution)
+  # return
+  # LAB(end solution)
 
 # Note: the solution above is kind of cute, but unforunately list.pop(0)
 # is not constant time with the standard python list implementation, so
