@@ -28,4 +28,13 @@ like_count = extractGenericLike("like-button-renderer-like-button")
 #GEt the like count
 dislike_count = extractGenericLike("like-button-renderer-dislike-button")
 
-print 'Hello'
+metrics = {}
+metrics['view_count'] = view_count
+metrics['like_count'] = like_count
+metrics['dislike_count'] = dislike_count
+metrics['indicator'] = 1000.* (like_count - dislike_count) / view_count
+
+print '===='
+print 'Handling ' , soup.title.text
+print 'The like count is', like_count, ' and dislike ', dislike_count
+print 'Popularity indicator is ' , metrics['indicator']
