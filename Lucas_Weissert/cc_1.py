@@ -40,7 +40,7 @@ def fizbuzz(x):
 
 #Write a function that takes a number and returns a list of its digits.
 def number2digits(number):
-  return
+  return [int(i) for i in str(number)]
 
 #Write function that translates a text to Pig Latin and back.
 #English is translated to Pig Latin by taking the first letter of every word,
