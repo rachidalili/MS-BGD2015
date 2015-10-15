@@ -23,12 +23,19 @@
 # instead of the actual count.
 # So donuts(5) returns 'Number of donuts: 5'
 # and donuts(23) returns 'Number of donuts: many'
-def donuts(count):
-    if count >= 10:
-        s="Number of donuts: many"
-    else:
-        s="Number of donuts: "+str(count)
-    return s
+
+import numpy as np
+
+def donuts(count=0):
+  #int count
+
+  if count >=10:
+      print"Number of donuts : %s  " %('a lots')
+  else:
+      print("Number of donuts :%d " %count)
+#return count
+
+donuts(122)
 
 
 # B. both_ends
@@ -37,9 +44,18 @@ def donuts(count):
 # so 'spring' yields 'spng'. However, if the string length
 # is less than 2, return instead the empty string.
 def both_ends(s):
-    if len(s)<2:    df=""
-    else:           df=s[:2]+s[-2:]
-    return df
+    if (len(s))<=2:
+        print ("")
+    else:
+        s=(s[0:2]+s[-2:])
+        print(s)
+
+#tests
+both_ends('Yougotodoit')
+
+both_ends('u')
+
+
 
 
 # C. fix_start
@@ -51,11 +67,18 @@ def both_ends(s):
 # Assume that the string is length 1 or more.
 # Hint: s.replace(stra, strb) returns a version of string s
 # where all instances of stra have been replaced by strb.
-def fix_start(s):
-    firstChar = s[0]
-    r = s[1:]
-    return firstChar+r.replace(firstChar,'*')
 
+  
+def fix_start(s):
+   debcar = s[0]
+   lereste = s[1:]
+   remplace = lereste.replace(debcar, '*')
+   return debcar + remplace
+  
+  #test
+fix_start('ouaesocool')
+  
+  
 
 # D. MixUp
 # Given strings a and b, return a single string with a and b separated
@@ -65,10 +88,19 @@ def fix_start(s):
 #   'dog', 'dinner' -> 'dig donner'
 # Assume a and b are length 2 or more.
 def mix_up(a, b):
-    a2char = a[:2]
-    b2char = b[:2]
-    return b2char+a[2:]+" "+a2char+b[2:]
-
+        if len(a)<3:
+           print('plus que 3 caracteres par mot svp')
+        elif len(b)<3:
+           print('plus que 3 caracteres par mot svp')
+        else:
+          c1=a[:2]  #chaine1 est sans les permiers 2 caracteres
+          c2=b[:2]  #chaine1 est sans les permiers 2 caracteres
+          a1=c2+a[2:] #swap avec les permiers caracters de l'autre mot + le reste du mode
+          b1=c1+b[2:] #idem
+          return a1+' '+b1
+#tests
+mix_up('Thanh','Jade')
+mix_up('Th','J')
 
 # Provided simple test() function used in main() to print
 # what each function returns vs. what it's supposed to return.
@@ -78,6 +110,10 @@ def test(got, expected):
   else:
     prefix = '  X '
   print '%s got: %s expected: %s' % (prefix, repr(got), repr(expected))
+
+#tests
+test(3,3)
+test(5,4)
 
 
 # Provided main() calls the above functions with interesting inputs,
@@ -97,7 +133,7 @@ def main():
   test(both_ends('a'), '')
   test(both_ends('xyz'), 'xyyz')
 
-  
+
   print
   print 'fix_start'
   test(fix_start('babble'), 'ba**le')
@@ -111,6 +147,10 @@ def main():
   test(mix_up('dog', 'dinner'), 'dig donner')
   test(mix_up('gnash', 'sport'), 'spash gnort')
   test(mix_up('pezzy', 'firm'), 'fizzy perm')
+
+
+
+
 
 
 # Standard boilerplate to call the main() function.

@@ -38,36 +38,48 @@ print_words() and print_top().
 """
 
 import sys
+import re
+import operator
 
-def getWordsCount(filename):
-    wordCountDict = {} #dictionnaire cle-valeur = word-count
-    fo = open(filename, "r+")
-    fileContent = fo.read()
-    words = fileContent.split()
-    for word in words:
-        if word in wordCountDict:
-            wordCountDict[word] += 1
-        else:
-            wordCountDict[word] = 1 
-    return wordCountDict
-    
-def print_words(filename):
-    wordCountDict = getWordsCount(filename)
-    #On trie selon les clefs par ordre croissant
-    wordCountList = sorted(wordCountDict.iteritems()) # equivaut aux options key=lambda (w,c): (w,c) et reverse=False
-    print wordCountList
-    
-def print_top(filename):
-    wordCountDict = getWordsCount(filename)
-    #On trie selon les valeurs par ordre decroissant
-    #marche aussi: lambda wordCount: (wordCount[1],wordCount[0])
-    wordCountList = sorted(wordCountDict.iteritems(), key=lambda (w,c): (c,w), reverse=True)
-    print wordCountList[:10] #On renvoie les plus presents
-    
+# +++your code here+++
 # Define print_words(filename) and print_top(filename) functions.
 # You could write a helper utility function that reads a file
 # and builds and returns a word/count dict for it.
 # Then print_words() and print_top() can just call the utility function.
+
+def get_file_dico(filename):
+    f = open(filename, 'rU')
+    text = f.read()
+    tokens = re.split("\s",text)
+    dico = {}
+
+    for token in tokens:
+        if  len(tokens)>0 :
+            word = token.lower();
+            if word not in  dico:
+                dico[word]=1
+            else:
+                dico[word] += 1
+
+    f.close()
+    return dico
+
+def print_words(filename):
+    dico = get_file_dico(filename)
+    for word in sorted(dico.keys()):
+        print(word," ",dico[word])
+
+def print_top(filename):
+    dico = get_file_dico(filename)
+    list = ()
+    i=0
+    orderedValues = sorted(dico.items(),key=operator.itemgetter(1), reverse=True)
+    i=0
+    for word,count in orderedValues:
+        print ("%s %d" % (word,count))
+        i += 1
+        if i > 200:
+            break
 
 ###
 
@@ -75,7 +87,7 @@ def print_top(filename):
 # calls the print_words() and print_top() functions which you must define.
 def main():
   if len(sys.argv) != 3:
-    print 'usage: ./wordcount.py {--count | --topcount} file'
+    print('usage: ./wordcount.py {--count | --topcount} file')
     sys.exit(1)
 
   option = sys.argv[1]
@@ -85,7 +97,7 @@ def main():
   elif option == '--topcount':
     print_top(filename)
   else:
-    print 'unknown option: ' + option
+    print ('unknown option: ' + option)
     sys.exit(1)
 
 if __name__ == '__main__':

@@ -39,47 +39,67 @@ print_words() and print_top().
 
 import sys
 
-def getWordsCount(filename):
-    wordCountDict = {} #dictionnaire cle-valeur = word-count
-    fo = open(filename, "r+")
-    fileContent = fo.read()
-    words = fileContent.split()
-    for word in words:
-        if word in wordCountDict:
-            wordCountDict[word] += 1
-        else:
-            wordCountDict[word] = 1 
-    return wordCountDict
-    
-def print_words(filename):
-    wordCountDict = getWordsCount(filename)
-    #On trie selon les clefs par ordre croissant
-    wordCountList = sorted(wordCountDict.iteritems()) # equivaut aux options key=lambda (w,c): (w,c) et reverse=False
-    print wordCountList
-    
-def print_top(filename):
-    wordCountDict = getWordsCount(filename)
-    #On trie selon les valeurs par ordre decroissant
-    #marche aussi: lambda wordCount: (wordCount[1],wordCount[0])
-    wordCountList = sorted(wordCountDict.iteritems(), key=lambda (w,c): (c,w), reverse=True)
-    print wordCountList[:10] #On renvoie les plus presents
-    
+# +++your code here+++
 # Define print_words(filename) and print_top(filename) functions.
 # You could write a helper utility function that reads a file
 # and builds and returns a word/count dict for it.
 # Then print_words() and print_top() can just call the utility function.
 
 ###
+def print_words(filename):
+  dico = readAndBuild(filename)
+
+  for k, v in sorted(dico.items(), key=lambda x:x[0]):
+    print k + ' ' + str(v)
+
+  return
+
+def print_top(filename):
+  dico = readAndBuild(filename)
+  i = 0
+  for k,v in sorted(dico.items(), key=lambda x:x[1], reverse=True):
+    i+=1
+    print k +' ' + str(v)
+    if i == 20:
+      break
+
+  return
+
+def dicValueSorted():
+
+  return
+
+# read file then build dico
+def readAndBuild(filename):
+  # dictionary
+  dico = {} 
+  #  Open file
+  f = open(filename,'r+')
+  # read file
+  # print f.read()
+  for line in f:
+    splits = line.split()
+    for word in splits:
+      if word.lower() in dico:
+        dico[word.lower()] += 1
+      else:
+        dico[word.lower()] = 1
+
+  return dico
 
 # This basic command line argument parsing code is provided and
 # calls the print_words() and print_top() functions which you must define.
 def main():
-  if len(sys.argv) != 3:
-    print 'usage: ./wordcount.py {--count | --topcount} file'
-    sys.exit(1)
+  # if len(sys.argv) != 3:
+  #   print 'usage: ./wordcount.py {--count | --topcount} file'
+  #   sys.exit(1)
 
-  option = sys.argv[1]
-  filename = sys.argv[2]
+  # option = sys.argv[1]
+  # filename = sys.argv[2]
+
+  filename = 'random_text.txt'
+  option ='--count'
+
   if option == '--count':
     print_words(filename)
   elif option == '--topcount':

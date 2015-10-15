@@ -24,11 +24,13 @@
 # So donuts(5) returns 'Number of donuts: 5'
 # and donuts(23) returns 'Number of donuts: many'
 def donuts(count):
-    if count >= 10:
-        s="Number of donuts: many"
-    else:
-        s="Number of donuts: "+str(count)
-    return s
+  sentence = 'Number of donuts: '
+  if count < 10:
+    sentence +=  str(count)
+  else:
+    sentence += 'many'
+
+  return sentence
 
 
 # B. both_ends
@@ -37,9 +39,11 @@ def donuts(count):
 # so 'spring' yields 'spng'. However, if the string length
 # is less than 2, return instead the empty string.
 def both_ends(s):
-    if len(s)<2:    df=""
-    else:           df=s[:2]+s[-2:]
-    return df
+  var = ''
+  if len(s)  >2:
+    var = s[0:2] + s[len(s)-2:len(s)]
+
+  return var
 
 
 # C. fix_start
@@ -52,9 +56,15 @@ def both_ends(s):
 # Hint: s.replace(stra, strb) returns a version of string s
 # where all instances of stra have been replaced by strb.
 def fix_start(s):
-    firstChar = s[0]
-    r = s[1:]
-    return firstChar+r.replace(firstChar,'*')
+  char1 =''
+  sentence =''
+  if len(s) >= 1:
+    char1 = s[0]
+    sentence = s.replace(char1,'*')
+    temp = list(sentence)
+    temp[0] = char1
+    sentence = "".join(temp)
+  return sentence
 
 
 # D. MixUp
@@ -65,9 +75,18 @@ def fix_start(s):
 #   'dog', 'dinner' -> 'dig donner'
 # Assume a and b are length 2 or more.
 def mix_up(a, b):
-    a2char = a[:2]
-    b2char = b[:2]
-    return b2char+a[2:]+" "+a2char+b[2:]
+  charA0 = a[0]
+  charA1 = a[1]
+  charB0 = b[0]
+  charB1 = b[1]
+  listA = list(a)
+  listB = list(b)
+  listA[0] = charB0
+  listA[1] = charB1
+  listB[0] = charA0
+  listB[1] = charA1
+  newSentence = "".join(listA) + " " + "".join(listB)
+  return newSentence
 
 
 # Provided simple test() function used in main() to print
