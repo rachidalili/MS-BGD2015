@@ -28,7 +28,7 @@ def length_words(array):
 #write fizbuzz programm
 def fizbuzz(x):
     if (x%3 == 0 and x%5 == 0):
-        return "Buzz"
+        return "FizzBuzz"
     elif (x%5 == 0):
         return "buzz"
     elif (x%3 == 0):
