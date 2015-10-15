@@ -34,6 +34,7 @@ def extractMetricsFromUrl(url):
   dislike_count = extractGenericLike(soup,"like-button-renderer-dislike-button")
 
   metrics = {}
+  metrics['title'] = soup.title.text
   metrics['view_count'] = view_count
   metrics['like_count'] = like_count
   metrics['dislike_count'] = dislike_count
@@ -50,5 +51,16 @@ def extractMetricsFromUrl(url):
 #extractMetricsFromUrl('https://www.youtube.com/watch?v=B3eAMGXFw1o')
 #extractMetricsFromUrl('https://www.youtube.com/watch?v=Ao8cGLIMtvg')
 #extractMetricsFromUrl('https://www.youtube.com/watch?v=lWA2pjMjpBs')
-url = 'https://www.youtube.com/results?search_query=rihanna'
-soup = getSoupFromUrl(url)
+
+MAX_PAGE = 2
+for i in range(0,MAX_PAGE):
+  url = 'https://www.youtube.com/results?search_query=rihanna&page='+str(i)
+  soup = getSoupFromUrl(url)
+
+  tile_links = soup.findAll("a", { "class" : "yt-uix-tile-link" })
+  all_metrics = []
+  for tile_link in tile_links:
+      if 'watch' in tile_link['href']:
+        url = 'https://www.youtube.com' + tile_link['href']
+        metrics_for_url = extractMetricsFromUrl(url)
+        all_metrics.append(metrics_for_url)
