@@ -52,8 +52,8 @@ def extractMetricsFromUrl(url):
 #extractMetricsFromUrl('https://www.youtube.com/watch?v=Ao8cGLIMtvg')
 #extractMetricsFromUrl('https://www.youtube.com/watch?v=lWA2pjMjpBs')
 
-MAX_PAGE = 2
-def getAllMetricsForArtist(artist):
+
+def getAllMetricsForArtist(artist,MAX_PAGE):
   all_metrics = []
   for i in range(0,MAX_PAGE):
     url = 'https://www.youtube.com/results?search_query='+artist+'&page='+str(i)
@@ -66,6 +66,9 @@ def getAllMetricsForArtist(artist):
           all_metrics.append(metrics_for_url)
   return all_metrics
 
+def getPopularityForArtist(artist,maxpage):
+    return max(getAllMetricsForArtist(artist,maxpage))
 
-rihanna = getAllMetricsForArtist('rihanna')
-beyonce = getAllMetricsForArtist('beyonce')
+
+rihanna = getAllMetricsForArtist('rihanna',2)
+beyonce = getAllMetricsForArtist('beyonce',2)

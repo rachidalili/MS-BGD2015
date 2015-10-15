@@ -10,38 +10,53 @@ def string_times(string, n):
 # Given an array of ints, return True if one of the first 4 elements
 # in the array is a 9. The array length may be less than 4.
 def array_front9(nums):
-    for i in range(0,nums[3]) :
-        if nums[i] == 9 :
-            return True
-        else:
-            i+=1
+    return 9 in nums[0:4]
 
 
 # Given a string, return the count of the number of times
 # that a substring length 2 appears  in the string and also as
 # the last 2 chars of the string, so "hixxxhi" yields 1 (we won't count the end substring).
 def last2(string):
-    return
+    return string.count(string[-2:]) - 1
 
 
 #Write a program that maps a list of words into a list of
 #integers representing the lengths of the correponding words.
 def length_words(array):
-    return
+    result = list()
+    for el in array :
+        result.append(len(el))
+    return result
 
 #write fizbuzz programm
-def fizbuzz():
-  return
+def fizbuzz(x):
+    if(x%3 == 0 and x%5 == 0):
+        return "FizzBuzz"
+    elif(x%5 == 0):
+        return "Buzz"
+    elif(x%3 == 0):
+        return "Fizz"
+    else:
+        return x
 
 #Write a function that takes a number and returns a list of its digits.
 def number2digits(number):
-  return
+    number_str = str(number)
+    result = list()
+    for el in number_str :
+        result.append(int(el))
+    return result
 
 #Write function that translates a text to Pig Latin and back.
 #English is translated to Pig Latin by taking the first letter of every word,
 #moving it to the end of the word and adding 'ay'
 def pigLatin(text):
-  return
+    sub = str.split(text," ")
+    res = str()
+    for el in sub :
+        res +=el[1:]+el[:1]+"ay"+" "
+    res = res.strip()
+    return res.capitalize()
 
 # Here's our "unit tests".
 class Lesson1Tests(unittest.TestCase):
@@ -59,7 +74,7 @@ class Lesson1Tests(unittest.TestCase):
     def testLast2(self):
         self.assertEqual(last2('hixxhi') , 1)
         self.assertEqual(last2('xaxxaxaxx') , 1)
-        self.assertEqual(last2('axxxaaxx') , 2)
+        self.assertEqual(last2('axxxxaxx') , 2)
 
     def testLengthWord(self):
         self.assertEqual(length_words(['hello','toto']) , [5,4])
@@ -70,7 +85,7 @@ class Lesson1Tests(unittest.TestCase):
         self.assertEqual(number2digits(4985098) , [4,9,8,5,0,9,8])
 
     def testPigLatin(self):
-        self.assertEqual(pigLatin("The quick brown fox") , "Hetay uickqay rownbay oxfay")
+        self.assertEqual(pigLatin("the quick brown fox") , "Hetay uickqay rownbay oxfay")
 
 
 
