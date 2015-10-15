@@ -35,9 +35,9 @@ def extractMetricsFromUrl(url):
 
   metrics = {}
   metrics['title'] = soup.title.text
-  metrics['view_count'] = view_count
-  metrics['like_count'] = like_count
-  metrics['dislike_count'] = dislike_count
+  #metrics['view_count'] = view_count
+  #metrics['like_count'] = like_count
+  #metrics['dislike_count'] = dislike_count
   metrics['indicator'] = 1000.* (like_count - dislike_count) / view_count
 
   print '===='
@@ -53,14 +53,19 @@ def extractMetricsFromUrl(url):
 #extractMetricsFromUrl('https://www.youtube.com/watch?v=lWA2pjMjpBs')
 
 MAX_PAGE = 2
-for i in range(0,MAX_PAGE):
-  url = 'https://www.youtube.com/results?search_query=rihanna&page='+str(i)
-  soup = getSoupFromUrl(url)
-
-  tile_links = soup.findAll("a", { "class" : "yt-uix-tile-link" })
+def getAllMetricsForArtist(artist):
   all_metrics = []
-  for tile_link in tile_links:
-      if 'watch' in tile_link['href']:
-        url = 'https://www.youtube.com' + tile_link['href']
-        metrics_for_url = extractMetricsFromUrl(url)
-        all_metrics.append(metrics_for_url)
+  for i in range(0,MAX_PAGE):
+    url = 'https://www.youtube.com/results?search_query='+artist+'&page='+str(i)
+    soup = getSoupFromUrl(url)
+    tile_links = soup.findAll("a", { "class" : "yt-uix-tile-link" })
+    for tile_link in tile_links:
+        if 'watch' in tile_link['href']:
+          url = 'https://www.youtube.com' + tile_link['href']
+          metrics_for_url = extractMetricsFromUrl(url)
+          all_metrics.append(metrics_for_url)
+  return all_metrics
+
+
+rihanna = getAllMetricsForArtist('rihanna')
+beyonce = getAllMetricsForArtist('beyonce')
