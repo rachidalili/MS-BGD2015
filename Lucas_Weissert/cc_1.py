@@ -1,4 +1,5 @@
 import unittest
+import re
 
 
 # Given a string and a non-negative int n, return a larger string
@@ -17,13 +18,14 @@ def array_front9(nums):
 # that a substring length 2 appears  in the string and also as
 # the last 2 chars of the string, so "hixxxhi" yields 1 (we won't count the end substring).
 def last2(string):
-    return string[-2] in string
+    return string.count(string[-2:]) - 1#len(re.findall(string[:-2], string))
 
 
 #Write a program that maps a list of words into a list of
 #integers representing the lengths of the correponding words.
 def length_words(array):
-    return
+    #for str in array:
+    return list((len(k)) for k in array)
 
 #write fizbuzz programm
 def fizbuzz(x):
@@ -38,7 +40,7 @@ def fizbuzz(x):
 
 #Write a function that takes a number and returns a list of its digits.
 def number2digits(number):
-  return
+  return [int(i) for i in str(number)]
 
 #Write function that translates a text to Pig Latin and back.
 #English is translated to Pig Latin by taking the first letter of every word,
@@ -51,6 +53,8 @@ class Lesson1Tests(unittest.TestCase):
 
     for i in range(0,100):
         print fizbuzz(i)
+
+
     def testArrayFront9(self):
         self.assertEqual(array_front9([1, 2, 9, 3, 4]) , True)
         self.assertEqual(array_front9([1, 2, 3, 4, 9]) , False)
