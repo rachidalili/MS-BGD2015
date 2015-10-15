@@ -50,6 +50,37 @@ def print_words(filename):
 
     import collections
 
+    dic = build_dico(filename)
+
+    odic = collections.OrderedDict(sorted(dic.items()))
+
+    for k, v in odic.items():
+        print(k, v)
+
+    return
+
+
+def print_top(filename):
+
+    import operator
+
+    dic = build_dico(filename)
+
+    ord_dic = reversed(sorted(dic.items(), key=operator.itemgetter(1)))
+
+    i = 1
+    for item in ord_dic:
+
+        print(str(item[0]) + " " + str(item[1]))
+
+        if i == 20:
+            break
+
+        i += 1
+
+
+def build_dico(filename):
+
     file = open(filename)
 
     s = file.read()
@@ -63,12 +94,8 @@ def print_words(filename):
         else:
             dic[word] = 1
 
-    odic = collections.OrderedDict(sorted(dic.items()))
-
-    for k, v in odic.items():
-        print(k, v)
-
     return dic
+
     ###
 
     # This basic command line argument parsing code is provided and
