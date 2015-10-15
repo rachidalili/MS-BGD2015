@@ -18,8 +18,6 @@ def array_front9(nums):
 # that a substring length 2 appears  in the string and also as
 # the last 2 chars of the string, so "hixxxhi" yields 1 (we won't count the end substring).
 def last2(string):
-    print "-"+string+'_'
-    print '_'+string[-2:]+'_'
     return len(re.findall(string[:-2], string))#string.count(string[-2:])
 
 
@@ -27,7 +25,7 @@ def last2(string):
 #integers representing the lengths of the correponding words.
 def length_words(array):
     #for str in array:
-    return
+    return list((len(k)) for k in array)
 
 #write fizbuzz programm
 def fizbuzz(x):
