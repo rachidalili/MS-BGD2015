@@ -1,6 +1,11 @@
 # coding: utf8
 import CrawlerArtist
 import requests
+import random
+import sys
+from threading import Thread
+import time
+import os
 from bs4 import BeautifulSoup
 
 
@@ -68,14 +73,50 @@ def getAllMetricsForArtist(artist):
   return all_metrics
 
 
-if __name__ == '__main__':
-  artists = []
-  artists = CrawlerArtist.getAllArtistsFromTop100(artists)
-  #print len(artists)
-  
-  for artist in artists:
-    getAllMetricsForArtist(artist)
+#Creation de notre class qui va afficher les informations du thread
+class DisplayThread(Thread):
 
-  print all_metrics
+    #Constructeur
+    def __init__(self, numThread, artists):
+        Thread.__init__(self)
+        self.numThread = numThread
+        self.artists = artists
+
+    #On definit notre run
+    def run(self):
+        #On recupere le nb d artistes traites par thread
+        artist_by_thread = len(artists)/nb_thread
+        #L indice du premier artiste traite
+        first_artist = self.numThread * artist_by_thread
+        #L indice du dernier
+        last_artist = (self.numThread + 1) * artist_by_thread
+        #On effectue notre parsing sur cette partie d artiste
+        for artist in artists[first_artist:last_artist]:
+          getAllMetricsForArtist(artist)
+
+if __name__ == '__main__':
+
+  #On recupere le nombre de thread maximum
+  nb_thread = os.sysconf("SC_NPROCESSORS_ONLN") * 2
+
+  artists = []
+  threads = []
+
+  # On recupere le top 100 des artistes
+  artists = CrawlerArtist.getAllArtistsFromTop100(artists)
+
+  # On creer attends de threads que necessaire
+  for i in range(0,nb_thread):
+    t = DisplayThread(i, artists)
+    threads.append(t)
+    t.start()
+
+  # On attends que tous les thread soient finis
+  for thread in threads:
+    thread.join()
+
+  print "All threads finished"
+
+  # print all_metrics
   #rihanna = getAllMetricsForArtist('rihanna')
   #beyonce = getAllMetricsForArtist('beyonce')
