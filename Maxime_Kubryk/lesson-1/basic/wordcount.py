@@ -78,6 +78,8 @@ def print_top(filename):
 
         i += 1
 
+    return
+
 
 def build_dico(filename):
 
