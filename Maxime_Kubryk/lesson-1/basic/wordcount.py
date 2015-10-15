@@ -45,24 +45,79 @@ import sys
 # and builds and returns a word/count dict for it.
 # Then print_words() and print_top() can just call the utility function.
 
-###
 
-# This basic command line argument parsing code is provided and
-# calls the print_words() and print_top() functions which you must define.
+def print_words(filename):
+
+    import collections
+
+    dic = build_dico(filename)
+
+    odic = collections.OrderedDict(sorted(dic.items()))
+
+    for k, v in odic.items():
+        print(k, v)
+
+    return
+
+
+def print_top(filename):
+
+    import operator
+
+    dic = build_dico(filename)
+
+    ord_dic = reversed(sorted(dic.items(), key=operator.itemgetter(1)))
+
+    i = 1
+    for item in ord_dic:
+
+        print(str(item[0]) + " " + str(item[1]))
+
+        if i == 20:
+            break
+
+        i += 1
+
+    return
+
+
+def build_dico(filename):
+
+    file = open(filename)
+
+    s = file.read()
+    s = s.replace('\n', ' ').strip().lower().split(" ")
+
+    dic = {}
+    for word in s:
+
+        if dic.has_key(word):
+            dic[word] += 1
+        else:
+            dic[word] = 1
+
+    return dic
+
+    ###
+
+    # This basic command line argument parsing code is provided and
+    # calls the print_words() and print_top() functions which you must define.
+
+
 def main():
-  if len(sys.argv) != 3:
-    print 'usage: ./wordcount.py {--count | --topcount} file'
-    sys.exit(1)
+    if len(sys.argv) != 3:
+        print('usage: ./wordcount.py {--count | --topcount} file')
+        sys.exit(1)
 
-  option = sys.argv[1]
-  filename = sys.argv[2]
-  if option == '--count':
-    print_words(filename)
-  elif option == '--topcount':
-    print_top(filename)
-  else:
-    print 'unknown option: ' + option
-    sys.exit(1)
+    option = sys.argv[1]
+    filename = sys.argv[2]
+    if option == '--count':
+        print_words(filename)
+    elif option == '--topcount':
+        print_top(filename)
+    else:
+        print('unknown option: ' + option)
+        sys.exit(1)
 
 if __name__ == '__main__':
-  main()
+    main()

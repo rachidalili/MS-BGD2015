@@ -39,7 +39,31 @@ print_words() and print_top().
 
 import sys
 
-# +++your code here+++
+def getWordsCount(filename):
+    wordCountDict = {} #dictionnaire cle-valeur = word-count
+    fo = open(filename, "r+")
+    fileContent = fo.read()
+    words = fileContent.split()
+    for word in words:
+        if word in wordCountDict:
+            wordCountDict[word] += 1
+        else:
+            wordCountDict[word] = 1 
+    return wordCountDict
+    
+def print_words(filename):
+    wordCountDict = getWordsCount(filename)
+    #On trie selon les clefs par ordre croissant
+    wordCountList = sorted(wordCountDict.iteritems()) # equivaut aux options key=lambda (w,c): (w,c) et reverse=False
+    print wordCountList
+    
+def print_top(filename):
+    wordCountDict = getWordsCount(filename)
+    #On trie selon les valeurs par ordre decroissant
+    #marche aussi: lambda wordCount: (wordCount[1],wordCount[0])
+    wordCountList = sorted(wordCountDict.iteritems(), key=lambda (w,c): (c,w), reverse=True)
+    print wordCountList[:10] #On renvoie les plus presents
+    
 # Define print_words(filename) and print_top(filename) functions.
 # You could write a helper utility function that reads a file
 # and builds and returns a word/count dict for it.
