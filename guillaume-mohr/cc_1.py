@@ -23,8 +23,17 @@ def array_front9(nums):
 # that a substring length 2 appears  in the string and also as
 # the last 2 chars of the string, so "hixxxhi" yields 1 (we won't count the end substring).
 def last2(string):
-
-    return
+    couples = {}
+    n = len(string)
+    if(n < 2):
+        return 0
+    for i in range(len(string) - 1):
+        couple = string[i:i+2]
+        if couple in couples.keys():
+            couples[couple] += 1
+        else:
+            couples[couple] = 0
+    return couples[string[n-2:n]]
 
 
 #Write a program that maps a list of words into a list of
@@ -45,13 +54,25 @@ def fizbuzz():
 
 #Write a function that takes a number and returns a list of its digits.
 def number2digits(number):
-  return
+    return [int(c) for c in str(number)]
 
 #Write function that translates a text to Pig Latin and back.
 #English is translated to Pig Latin by taking the first letter of every word,
 #moving it to the end of the word and adding 'ay'
 def pigLatin(text):
-  return
+    def pigWord(word):
+        if(len(word)<2):
+            return word + 'ay'
+        firstLetter = word[0]
+        secondLetter = word[1]
+        if(firstLetter.isupper()):
+            secondLetter = secondLetter.upper()
+            firstLetter = firstLetter.lower()
+        return secondLetter + word[2:len(word)] + firstLetter + 'ay'
+    solution = ''
+    for word in text.split(' '):
+        solution += pigWord(word) + ' '
+    return solution[:-1] #delete the last space
 
 # Here's our "unit tests".
 class Lesson1Tests(unittest.TestCase):
