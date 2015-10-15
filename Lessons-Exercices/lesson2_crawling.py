@@ -14,12 +14,16 @@ def extractGenericLike(soup,classname):
   like_count = extractIntFromText(like_count_str)
   return like_count
 
-def extractMetricsFromUrl(url):
+def getSoupFromUrl(url):
   #Execute q request toward Youtube
   request = requests.get(url)
   #parse the restult of the request
   soup = BeautifulSoup(request.text, 'html.parser')
+  return soup
 
+def extractMetricsFromUrl(url):
+
+  soup = getSoupFromUrl(url)
   #GEt the view count
   view_count_str = soup.findAll("div", { "class" : "watch-view-count" })[0].text
   view_count = extractIntFromText(view_count_str)
@@ -43,6 +47,8 @@ def extractMetricsFromUrl(url):
   return metrics
 
 
-extractMetricsFromUrl('https://www.youtube.com/watch?v=B3eAMGXFw1o')
-extractMetricsFromUrl('https://www.youtube.com/watch?v=Ao8cGLIMtvg')
-extractMetricsFromUrl('https://www.youtube.com/watch?v=lWA2pjMjpBs')
+#extractMetricsFromUrl('https://www.youtube.com/watch?v=B3eAMGXFw1o')
+#extractMetricsFromUrl('https://www.youtube.com/watch?v=Ao8cGLIMtvg')
+#extractMetricsFromUrl('https://www.youtube.com/watch?v=lWA2pjMjpBs')
+url = 'https://www.youtube.com/results?search_query=rihanna'
+soup = getSoupFromUrl(url)
