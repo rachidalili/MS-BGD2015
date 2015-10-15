@@ -48,6 +48,27 @@ import sys
 
 def print_words(filename):
 
+    import collections
+
+    file = open(filename)
+
+    s = file.read()
+    s = s.replace('\n', ' ').strip().lower().split(" ")
+
+    dic = {}
+    for word in s:
+
+        if dic.has_key(word):
+            dic[word] += 1
+        else:
+            dic[word] = 1
+
+    odic = collections.OrderedDict(sorted(dic.items()))
+
+    for k, v in odic.items():
+        print(k, v)
+
+    return dic
     ###
 
     # This basic command line argument parsing code is provided and
@@ -56,7 +77,7 @@ def print_words(filename):
 
 def main():
     if len(sys.argv) != 3:
-        print ('usage: ./wordcount.py {--count | --topcount} file')
+        print('usage: ./wordcount.py {--count | --topcount} file')
         sys.exit(1)
 
     option = sys.argv[1]
@@ -66,7 +87,7 @@ def main():
     elif option == '--topcount':
         print_top(filename)
     else:
-        print 'unknown option: ' + option
+        print('unknown option: ' + option)
         sys.exit(1)
 
 if __name__ == '__main__':
