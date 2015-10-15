@@ -1,4 +1,5 @@
 import unittest
+import re
 
 
 # Given a string and a non-negative int n, return a larger string
@@ -17,12 +18,15 @@ def array_front9(nums):
 # that a substring length 2 appears  in the string and also as
 # the last 2 chars of the string, so "hixxxhi" yields 1 (we won't count the end substring).
 def last2(string):
-    return string[-2] in string
+    print "-"+string+'_'
+    print '_'+string[-2:]+'_'
+    return len(re.findall(string[:-2], string))#string.count(string[-2:])
 
 
 #Write a program that maps a list of words into a list of
 #integers representing the lengths of the correponding words.
 def length_words(array):
+    #for str in array:
     return
 
 #write fizbuzz programm
@@ -51,6 +55,8 @@ class Lesson1Tests(unittest.TestCase):
 
     for i in range(0,100):
         print fizbuzz(i)
+
+
     def testArrayFront9(self):
         self.assertEqual(array_front9([1, 2, 9, 3, 4]) , True)
         self.assertEqual(array_front9([1, 2, 3, 4, 9]) , False)
