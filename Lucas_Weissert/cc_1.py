@@ -18,7 +18,7 @@ def array_front9(nums):
 # that a substring length 2 appears  in the string and also as
 # the last 2 chars of the string, so "hixxxhi" yields 1 (we won't count the end substring).
 def last2(string):
-    return len(re.findall(string[:-2], string))#string.count(string[-2:])
+    return string.count(string[-2:]) - 1#len(re.findall(string[:-2], string))
 
 
 #Write a program that maps a list of words into a list of
