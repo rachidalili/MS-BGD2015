@@ -1,5 +1,4 @@
 import requests
-import pprint
 from bs4 import BeautifulSoup
 from threading import Thread
 import time
@@ -59,7 +58,7 @@ rapports = {}
 nb_thread = os.sysconf("SC_NPROCESSORS_ONLN") * 2
 #Tableau de threads
 threads = []
-#Tableau des annees
+#Tableau des annees , pas d annees 2009
 years = ['2010', '2011', '2012', '2013']
 #On regarde les positions des informations qui nous interessent (position des tr)
 libelles = [10, 14, 22, 27]
