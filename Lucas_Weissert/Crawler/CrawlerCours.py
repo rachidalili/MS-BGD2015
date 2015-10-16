@@ -104,7 +104,7 @@ if __name__ == '__main__':
 
   # On recupere le top 100 des artistes
   artists = CrawlerArtist.getAllArtistsFromTop100(artists)
-
+  
   # On creer attends de threads que necessaire
   for i in range(0,nb_thread):
     t = DisplayThread(i, artists)
