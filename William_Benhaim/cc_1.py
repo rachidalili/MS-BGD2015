@@ -5,20 +5,20 @@ import unittest
 # that is n copies of the original string.
 
 def string_times(string, n):
-    return
+    return string*n
 
 # Given an array of ints, return True if one of the first 4 elements
 # in the array is a 9. The array length may be less than 4.
 def array_front9(nums):
-
-  return
+    #longueur=min(len(nums) & 4)
+    return 9 in nums[0: 4]
 
 
 # Given a string, return the count of the number of times
 # that a substring length 2 appears  in the string and also as
 # the last 2 chars of the string, so "hixxxhi" yields 1 (we won't count the end substring).
 def last2(string):
-    return
+    return 
 
 
 #Write a program that maps a list of words into a list of
@@ -28,7 +28,16 @@ def length_words(array):
 
 #write fizbuzz programm
 def fizbuzz():
-  return
+    for i in range(1,100):
+        teste='' 
+        if i%3==0:
+            teste=teste+"fiz"
+        if i%5==0:
+            teste=teste+"buzz"
+        if teste=='':
+            teste=i
+        print teste
+    return '' 
 
 #Write a function that takes a number and returns a list of its digits.
 def number2digits(number):
@@ -42,7 +51,7 @@ def pigLatin(text):
 
 # Here's our "unit tests".
 class Lesson1Tests(unittest.TestCase):
-
+    fizbuzz()
     def testArrayFront9(self):
         self.assertEqual(array_front9([1, 2, 9, 3, 4]) , True)
         self.assertEqual(array_front9([1, 2, 3, 4, 9]) , False)
@@ -76,4 +85,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
