@@ -24,17 +24,18 @@ for year in years:
     # select all tags "td" having a class name ending with a "G"
     cells = soup.find_all("td", class_=re.compile("G$"))
 
-    yeardata = {}
+    yearData = {}
     for i in range(len(cells)):
+        # select cells containing a string having its last 3 characters in quantityOfInterest
         if cells[i].get_text()[-3:] in quantityOfInterest:
             montantParHabitant = integer(cells[i - 2])
             moyenneParStrate = integer(cells[i - 1])
             label = cells[i].get_text()[-1]
 
-            yeardata[label] = {"montantParHabitant": montantParHabitant,
+            yearData[label] = {"montantParHabitant": montantParHabitant,
                                "moyenneParStrate": moyenneParStrate}
 
-    data[str(year)] = yeardata
+    data[str(year)] = yearData
 
 
 # checking the results
