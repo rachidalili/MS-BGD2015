@@ -5,43 +5,33 @@ import unittest
 # that is n copies of the original string.
 
 def string_times(string, n):
-    return string*n
+    return string * n
 
 # Given an array of ints, return True if one of the first 4 elements
 # in the array is a 9. The array length may be less than 4.
 def array_front9(nums):
-    #longueur=min(len(nums) & 4)
-    return 9 in nums[0: 4]
+    return 9 in nums[:min(3, len(nums) - 1)]
 
 
 # Given a string, return the count of the number of times
 # that a substring length 2 appears  in the string and also as
 # the last 2 chars of the string, so "hixxxhi" yields 1 (we won't count the end substring).
 def last2(string):
-    return 
+    return string.count(string[-2:]) - 1
 
 
 #Write a program that maps a list of words into a list of
 #integers representing the lengths of the correponding words.
 def length_words(array):
-    return
+    return [len(e) for e in array]
 
 #write fizbuzz programm
 def fizbuzz():
-    for i in range(1,100):
-        teste='' 
-        if i%3==0:
-            teste=teste+"fiz"
-        if i%5==0:
-            teste=teste+"buzz"
-        if teste=='':
-            teste=i
-        print teste
-    return '' 
+    print '\n'.join('Fizz' * (not i % 3) + 'Buzz' * (not i % 5) or str(i) for i in xrange(1, 100))
 
 #Write a function that takes a number and returns a list of its digits.
 def number2digits(number):
-  return
+    return [int(e) for e in str(number)]
 
 #Write function that translates a text to Pig Latin and back.
 #English is translated to Pig Latin by taking the first letter of every word,
@@ -51,7 +41,7 @@ def pigLatin(text):
 
 # Here's our "unit tests".
 class Lesson1Tests(unittest.TestCase):
-    fizbuzz()
+
     def testArrayFront9(self):
         self.assertEqual(array_front9([1, 2, 9, 3, 4]) , True)
         self.assertEqual(array_front9([1, 2, 3, 4, 9]) , False)
@@ -78,6 +68,9 @@ class Lesson1Tests(unittest.TestCase):
     def testPigLatin(self):
         self.assertEqual(pigLatin("The quick brown fox") , "Hetay uickqay rownbay oxfay")
 
+    def testFizzBuzz(self):
+        fizbuzz()
+
 
 
 def main():
@@ -85,3 +78,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
