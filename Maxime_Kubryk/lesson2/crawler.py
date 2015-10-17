@@ -7,6 +7,7 @@ page = requests.get('http://stackoverflow.com/questions/3207418/crawler-vs-scrap
 
 soup = BeautifulSoup(page.text)
 
+
 posts = soup.find_all("div", class_="post-text")
 
 posts_list = []
