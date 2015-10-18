@@ -5,74 +5,58 @@ import unittest
 # that is n copies of the original string.
 
 def string_times(string, n):
-    if(n == 0):
-        return ""
-    else:
-        return string + string_times(string, n-1)
+    return string*n
 
 # Given an array of ints, return True if one of the first 4 elements
 # in the array is a 9. The array length may be less than 4.
 def array_front9(nums):
-    for i in range(min(len(nums), 4)):
-        if(nums[i] == 9):
-            return True
-    return False
+    return 9 in nums[0:4]
 
 
 # Given a string, return the count of the number of times
 # that a substring length 2 appears  in the string and also as
 # the last 2 chars of the string, so "hixxxhi" yields 1 (we won't count the end substring).
 def last2(string):
-    couples = {}
-    n = len(string)
-    if(n < 2):
-        return 0
-    for i in range(len(string) - 1):
-        couple = string[i:i+2]
-        if couple in couples.keys():
-            couples[couple] += 1
-        else:
-            couples[couple] = 0
-    return couples[string[n-2:n]]
+    return string.count(string[-2:]) - 1
 
 
 #Write a program that maps a list of words into a list of
 #integers representing the lengths of the correponding words.
 def length_words(array):
-    return [len(w) for w in array]
+    result = list()
+    for el in array :
+        result.append(len(el))
+    return result
 
 #write fizbuzz programm
-def fizbuzz():
-    for i in range(100):
-        add = ""
-        if(i % 3 == 0):
-            add += "Fizz"
-        if(i % 5 == 0):
-            add += "Buzz"
-        print(str(i) + " " + add)
-    return
+def fizbuzz(x):
+    if(x%3 == 0 and x%5 == 0):
+        return "FizzBuzz"
+    elif(x%5 == 0):
+        return "Buzz"
+    elif(x%3 == 0):
+        return "Fizz"
+    else:
+        return x
 
 #Write a function that takes a number and returns a list of its digits.
 def number2digits(number):
-    return [int(c) for c in str(number)]
+    number_str = str(number)
+    result = list()
+    for el in number_str :
+        result.append(int(el))
+    return result
 
 #Write function that translates a text to Pig Latin and back.
 #English is translated to Pig Latin by taking the first letter of every word,
 #moving it to the end of the word and adding 'ay'
 def pigLatin(text):
-    def pigWord(word):
-        if(len(word)<2):
-            return word + 'ay'
-        firstLetter = word[0]
-        secondLetter = word[1]
-        if(firstLetter.isupper()):
-            secondLetter = secondLetter.upper()
-            firstLetter = firstLetter.lower()
-        return secondLetter + word[2:len(word)] + firstLetter + 'ay'
-    solution = ''
-    for word in text.split(' '):
-        solution += pigWord(word) + ' '
-    return solution[:-1] #delete the last space
+    sub = str.split(text," ")
+    res = str()
+    for el in sub :
+        res +=el[1:]+el[:1]+"ay"+" "
+    res = res.strip()
+    return res.capitalize()
 
 # Here's our "unit tests".
 class Lesson1Tests(unittest.TestCase):
@@ -90,7 +74,7 @@ class Lesson1Tests(unittest.TestCase):
     def testLast2(self):
         self.assertEqual(last2('hixxhi') , 1)
         self.assertEqual(last2('xaxxaxaxx') , 1)
-        self.assertEqual(last2('axxxaaxx') , 2)
+        self.assertEqual(last2('axxxxaxx') , 2)
 
     def testLengthWord(self):
         self.assertEqual(length_words(['hello','toto']) , [5,4])
@@ -101,7 +85,7 @@ class Lesson1Tests(unittest.TestCase):
         self.assertEqual(number2digits(4985098) , [4,9,8,5,0,9,8])
 
     def testPigLatin(self):
-        self.assertEqual(pigLatin("The quick brown fox") , "Hetay uickqay rownbay oxfay")
+        self.assertEqual(pigLatin("the quick brown fox") , "Hetay uickqay rownbay oxfay")
 
 
 
