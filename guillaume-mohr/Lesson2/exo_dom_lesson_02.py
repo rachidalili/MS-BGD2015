@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 def getPage(year):
     """
-    return the page for Paris accounts for the year passed as an argument.
+    returns the page for Paris accounts for the year passed as an argument.
     Arguments :
     year : integer comprised between 2000 and 2014
     """
@@ -20,17 +20,6 @@ def getPage(year):
     return r.text
 
 
-def isRowUseful(usefulText, row):
-    """
-    Check if one cell content of the row contains a text of argument usefulText
-    Arguments:
-    usefulText: list of useful text
-    row: a list of soup tags
-    """
-    seq = [t in c.text for c in row('td') for t in usefulText]
-    return True in seq
-
-    
 def convertToInt(text):
     """converts text to integer, removing unreadable characters"""
     return text.replace(u'\xa0', '').replace(' ', '') 
@@ -63,4 +52,5 @@ def main():
     print('Resutls by Strate :')
     print(resultsPerStrate)
 
-main()
+if __name__ == '__main__':
+    main()
