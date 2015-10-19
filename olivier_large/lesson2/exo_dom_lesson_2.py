@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 def testPage(soup):
+	# test if data exists for this year
 	if str(soup.select(".montantpetit.G")) != "[]":
 		return True
 	else:
@@ -9,17 +10,17 @@ def testPage(soup):
 
 def getSoupFromUrl(url):
   request = requests.get(url)
-  #parse the restult of the request
   soup = BeautifulSoup(request.text, 'html.parser')
   return soup
 
 def getDataFromTab(soup,num_ligne,num_colonne):
+	# return the data at line num_ligne, column num_colonne
 	css_selector = "tr:nth-of-type(" + str(num_ligne) +") > td:nth-of-type(" + str(num_colonne) +")"
 	data = soup.select(css_selector)[0].text.replace('\xa0', '').replace(' ','')
 	return data
 
 def getAllDataFromPage(annee) :
-	#list format return is [A, B, C, D]
+	#list format return is A list of lists with data of A, B, C, D
 	title = ["A","B","C","D"]
 	lignes = [10,14,22,27]
 	colonnes = [2,3]
@@ -28,7 +29,6 @@ def getAllDataFromPage(annee) :
 	soup = getSoupFromUrl(url)
 	test =testPage(soup)
 	if(test is True):
-		#select all class montantpetit G and td number under class bleu
 		nb_data = 0
 		for ligne in lignes:
 			data = []
@@ -40,6 +40,7 @@ def getAllDataFromPage(annee) :
 	return all_data
 
 def printDataForRange(annees):
+	# print the data
 	for i in range (annees[0],annees[1]+1):
 		all_data = getAllDataFromPage(i)
 		print("=== annee " + str(i) + " ===")
