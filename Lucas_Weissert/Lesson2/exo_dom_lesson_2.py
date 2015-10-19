@@ -22,10 +22,11 @@ def GetReportFromYear(year):
     url =  getUrl(year)  
     soup = getSoupFromUrl(url)
     rapport = {}
-    result = {}
     
+    indice_compte = 0
     #Pour chacun des libelles on recupere les deux informations qui nous interesse
     for libelle in libelles:
+        result = {}
         #Information sous forme de str
         str_EuroParHabitant = soup.select('tr:nth-of-type('+ str(libelle) + ') > td:nth-of-type(' + str(information_by_libelle[0]) + ')')
         str_MoyenneStrate = soup.select('tr:nth-of-type('+ str(libelle) + ') > td:nth-of-type(' + str(information_by_libelle[1]) + ')')
@@ -33,10 +34,14 @@ def GetReportFromYear(year):
         EuroParHabitant = extractIntFromText(str_EuroParHabitant[0].text)
         MoyenneStrate = extractIntFromText(str_MoyenneStrate[0].text)
 
-    result["EuroParHabitant"] = EuroParHabitant
-    result["MoyenneStrate"] = MoyenneStrate
-    rapport[year] = result
+        result["EuroParHabitant"] = EuroParHabitant
+        result["MoyenneStrate"] = MoyenneStrate
 
+        #print comptes[]
+        rapport[comptes[indice_compte]] = result
+        indice_compte += 1
+
+    print rapport
     return rapport
 
 #Creation de notre class qui va afficher les informations du thread
@@ -61,6 +66,7 @@ threads = []
 years = ['2010', '2011', '2012', '2013']
 #On regarde les positions des informations qui nous interessent (position des tr)
 libelles = [10, 14, 22, 27]
+comptes = ["A","B","C","D"]
 #On regarde la postion des information euros et moyenne dans les td
 information_by_libelle = [2, 3]
 # On creer attends de threads que necessaire

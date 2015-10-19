@@ -68,3 +68,4 @@ def getAllMetricsForArtist(artist):
 
 
 rihanna = getAllMetricsForArtist('rihanna')
+beyonce = getAllMetricsForArtist('beyonce')
