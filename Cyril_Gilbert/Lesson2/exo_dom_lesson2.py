@@ -4,8 +4,6 @@ Created on Sat Oct 17 10:11:27 2015
 
 @author: Cyril Gilbert
 """
-
-
 import requests
 from bs4 import BeautifulSoup
 
