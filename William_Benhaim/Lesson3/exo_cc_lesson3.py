@@ -11,7 +11,7 @@ def FromTextToTextWithPlus(txt):
 
 #for year in range(firstYear,LastYear+1):
 def GetInfo(NameProduct):
-	url='http://www.cdiscount.com/search/10/acer+aspire.html#_his_'
+	url='http://www.cdiscount.com/search/10/'+NameProduct+'.html#_his_'
 	print(url)
 	soup = GetSoupFromUrl(url)
 	tile = soup.findAll("div", { "class" : "prdtBloc" })
