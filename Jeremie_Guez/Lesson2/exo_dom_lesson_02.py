@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
+
 def extractIntFromText(text):
   return float(text.replace(u'\xa0', u''))
 
@@ -13,55 +14,31 @@ def getSoupFromUrl(url):
   return soup
   
 def getDataFromCss(number):
-    colonne_habitant=soup.findAll("td", { "class" : "montantpetit G" })[number].text
-    return colonne_habitant
+    data_colonne=soup.findAll("td", { "class" : "montantpetit G" })[number].text
+    return data_colonne
 
-def extractMetricsFromTab(number):
-    for element in number:
-        colonne_habitant.append(getDataFromCss(tab_number[i]))
+years=['2010','2011','2012','2013']
 
 
-def extractMetricsFromUrl(url):
-    soup=getSoupFromUrl('http://alize2.finances.gouv.fr/communes/eneuro/detail.php?icom=056&dep=075&type=BPS&param=5&exercice=2013')
-    colonne_habitant=
+for i in range(0,len(years)):
+    print 'Years:',years[i]    
+    soup=getSoupFromUrl('http://alize2.finances.gouv.fr/communes/eneuro/detail.php?icom=056&dep=075&type=BPS&param=5&exercice='+years[i])
+    tab_number_habitant=[1,4,10,13]
+    tab_number_strate=[2,5,11,14]
+    tab_indicateur=['A','B','C','D']
+    colonne_strate=[]
+    colonne_habitant =[]
     
+    print 'Euros per capita:'
     
+    for i in range (0,len(tab_number_habitant)):
+        colonne_habitant.append(getDataFromCss(tab_number_habitant[i]))
+        print tab_indicateur[i], colonne_habitant[i]
 
+    print 'Average stratum:'
     
-
-
-
-tab_number_habitant=[1,4,10,13]
-tab_number_strate=[2,5,11,14]
-
-colonne_strate=[]
-colonne_habitant = []
-
-for i in range (0,len(tab_number)):
-    colonne_habitant.append(getDataFromCss(tab_number[i]))
-    print(colonne_habitant[i])
-
-
-
-
-#==============================================================================
-# getDataFromCss(tab_number)
-# 
-# colonne_strate_a= soup.findAll("td", { "class" : "montantpetit G" })[2].text
-# 
-# colonne_habitant_b = soup.findAll("td", { "class" : "montantpetit G" })[4].text
-# colonne_strate_b= soup.findAll("td", { "class" : "montantpetit G" })[5].text
-# 
-# colonne_habitant_c = soup.findAll("td", { "class" : "montantpetit G" })[10].text
-# colonne_strate_c= soup.findAll("td", { "class" : "montantpetit G" })[11].text
-# 
-# colonne_habitant_d = soup.findAll("td", { "class" : "montantpetit G" })[13].text
-# colonne_strate_d= soup.findAll("td", { "class" : "montantpetit G" })[14].text
-# 
-# 
-# 
-# print(colonne_habitant)
-#   
-#   
-#==============================================================================
-
+    for i in range (0,len(tab_number_strate)):
+        colonne_strate.append(getDataFromCss(tab_number_strate[i]))
+        print tab_indicateur[i], colonne_strate[i]
+        
+    print '====='

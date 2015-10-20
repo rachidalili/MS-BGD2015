@@ -35,7 +35,7 @@ def extractMetricsFromUrl(url):
 
   metrics = {}
   metrics['title'] = soup.title.text
-  #metrics['view_count'] = view_count
+  metrics['view_count'] = view_count
   #metrics['like_count'] = like_count
   #metrics['dislike_count'] = dislike_count
   metrics['indicator'] = 1000.* (like_count - dislike_count) / view_count
