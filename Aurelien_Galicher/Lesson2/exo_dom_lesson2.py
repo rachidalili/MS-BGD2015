@@ -2,7 +2,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-## gobal variables
+# gobal variables
 #labels = ["TOTAL DES PRODUITS DE FONCTIONNEMENT = A", "TOTAL DES CHARGES DE FONCTIONNEMENT = B", "TOTAL DES RESSOURCES D'INVESTISSEMENT = C", "TOTAL DES EMPLOIS D'INVESTISSEMENT = D"]
 ## end of globale variables
 
