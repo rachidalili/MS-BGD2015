@@ -15,6 +15,7 @@ import sys
 # ============ /README =============
 # ============= TODO =============
 # 
+# check validity (pick one user and manually compute his stars' mean)
 # add Threads
 #
 # ============ /TODO =============
