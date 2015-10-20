@@ -71,13 +71,14 @@ def fix_start(s):
 # Assume a and b are length 2 or more.
 def mix_up(a, b):
     first_2_Letter_a = a[:2]
-    first_2_letter_b = b[:2]
+    first_2_Letter_b = b[:2]
+
     rest_a = a[2:]
     rest_b = b[2:]
     
-    backMember = s[1:]
-    etoile = '*'
-    return
+    new_a = first_2_Letter_b + rest_a
+    new_b = first_2_Letter_a + rest_b
+    return (new_a + " " + new_b)
 
 
 # Provided simple test() function used in main() to print
