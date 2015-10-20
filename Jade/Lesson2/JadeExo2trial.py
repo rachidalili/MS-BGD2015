@@ -39,15 +39,36 @@ def getSoupFromUrl(url):
   soup = BeautifulSoup(request.text, 'html.parser')
   return soup
 
-#test only one year's report first
-soup = getSoupFromUrl('http://alize2.finances.gouv.fr/communes/eneuro/detail.php?icom=056&dep=075&type=BPS&param=5&exercice=2011')
 
 
-  #average amount of strat
-  #e.g from inspect element <td class="montantpetit G">2 308&nbsp;</td>
+def getmontant():
+    for libelpetit in soup.findAll("td", { "class" : "libellepetit G"}):
+        ttotal=libelpetit.string[-3:]
+        if  ( ttotal == "= A" or  ttotal == "= B" \
+        or ttotal == "= C" or ttotal == "= D") :
+            i=0
+            for montant in libelpetit.find_all_previous("td", { "class" : "montantpetit G"}):
+                print (montant.string)
+                i=i+1
+                if (i>2):
+                    break
+            print (libelpetit)
+
+    
+            
+
+for annee in ['2010','2011','2012','2013']:
+    url='http://alize2.finances.gouv.fr/communes/eneuro/detail.php?icom=056&dep=075&type=BPS&param=5&exercice='+annee
+    print ("\nRAPPORT DE ",annee,"\n")     
+    soup = getSoupFromUrl(url)
+    getmontant()   
+    
 
 
-produitAChampStrat = soup.findAll("td", { "class" : "montantpetit G"})
+
+
+          
+produitAChampStrat = soup.findAll("td", { "class" : "libellepetit G"})
 produitAChampEuroPar = soup.findAll("td", { "class" : "montantpeitit G>2" })
 produitAChampEuroPar = soup.findAll("td", { "class" : "montantpeitit G>5" })
   
