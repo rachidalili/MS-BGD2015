@@ -4,12 +4,6 @@ import requests
 from bs4 import BeautifulSoup
 
 
-URL = 'http://www.cdiscount.com/search/10/'
-END_URL = '.html#_his_'
-
-Acer = URL + 'acer+aspire' + END_URL
-
-
 def getSoupFromUrl(url):
 	#Execute q request toward Youtube
 	request = requests.get(url)
@@ -20,11 +14,15 @@ def getSoupFromUrl(url):
 def extractPostFromPage(url):
 	soup = getSoupFromUrl(url)
 	# body = soup.find_all('div', {'class': 'content'})
-	body = soup.find(id='lpContent')
-	blocs = body.find_all(id='lpBloc')
+	blocs = soup.find_all('div', {'class': 'prdtBloc'})
 	for bloc in blocs:
-		print bloc.prettify().encode('utf-8')
-		break
+		html = bloc.find('a').get('href')
+		descr = bloc.find('p', {'class': 'prdtBDesc'}).text.encode('utf-8')
+		price = bloc.find('span',{'class':'price'}).text.encode('utf-8')
+		print html
+		print descr
+		print price
+
 	return
 
 def extractMetrics(bloc):
