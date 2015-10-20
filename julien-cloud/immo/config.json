@@ -1,0 +1,14 @@
+{
+  "ROOT_URLS": [
+    {
+      "site": "lbc",
+      "url": "http://www.leboncoin.fr/ventes_immobilieres/offres/midi_pyrenees/",
+      "max_hops": 100
+    },
+    {
+      "site": "lbc",
+      "url": "http://www.leboncoin.fr/ventes_immobilieres/offres/ile_de_france/",
+      "max_hops": 100
+    }
+  ]
+}

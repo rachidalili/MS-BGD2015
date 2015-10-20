@@ -5,19 +5,7 @@ import unittest
 # that is n copies of the original string.
 
 def string_times(string, n):
-<<<<<<< HEAD
-    finalString = str()
-    if n > 0:
-        while n >= 1:
-            finalString =+ string
-            print(finalString)
-            n =- 1
-    print(finalString)
-
-    return finalString
-=======
     return string*n
->>>>>>> 74c86087b4dca2c371727cb49229e8625cd3333b
 
 # Given an array of ints, return True if one of the first 4 elements
 # in the array is a 9. The array length may be less than 4.
@@ -97,4 +85,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
