@@ -1,5 +1,3 @@
-# coding: utf8
-from pylab import *
 import requests
 from bs4 import BeautifulSoup
 
