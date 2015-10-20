@@ -57,10 +57,6 @@ def getMetricsfromYear(year):
 	return rapport
 
 
-
-
-
-
 def getAllMetrics (k) :
 	all_metrics = []
 	for i in range (0,k):

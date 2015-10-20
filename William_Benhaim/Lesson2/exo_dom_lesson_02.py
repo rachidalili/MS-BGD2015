@@ -32,7 +32,6 @@ for year in range(firstYear,LastYear+1):
 	print 'year',year
 	url='http://alize2.finances.gouv.fr/communes/eneuro/detail.php?icom=056&dep=075&type=BPS&param=5&exercice='+str(year)
 	soup=GetSoupFromUrl(url)
-
 	InfoForAYear(soup)
 
 
