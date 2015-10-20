@@ -36,7 +36,7 @@ def start():
     choix = input("Entrer votre recherche : ")
     choix = str(choix)
     url = "http://www.cdiscount.com/search/10/{}.html".format(choix.replace(" ","+"))
-    extractPostFromPage(url)
+    GetInfosFromPage(url)
 
  #Launching Crawling#
 
