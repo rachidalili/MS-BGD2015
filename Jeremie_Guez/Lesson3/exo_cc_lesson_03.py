@@ -15,8 +15,8 @@ def extractIntFromText(text):
 soup=getSoupFromUrl('http://www.cdiscount.com/search/10/acer+aspire.html')
 
 metrics={}
-
-for i in range (0,24):
+all_metrics=[]
+for i in range (0,10):
     desc_product=soup.findAll("p", { "class" : "prdtBDesc" })[i].text
     title_product=soup.findAll("div", { "class" : "prdtBTit" })[i].text
     older_price=soup.findAll("div", { "class" : "prdtPrSt" })[i].text
@@ -25,5 +25,8 @@ for i in range (0,24):
     metrics['title_product']=title_product
     metrics['older_price']=older_price
     metrics['new_price']=new_price
+    all_metrics.append(metrics)
 
-print (metrics)
+print (all_metrics)
+
+
