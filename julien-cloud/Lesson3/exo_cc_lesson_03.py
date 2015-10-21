@@ -19,7 +19,6 @@ for entry in entries:
     data_point['image_url'] = entry.find('ul', {'class': 'prdtBPCar'}).find('img')['src']
     old_price = entry.find('div', {'class': 'prdtPrSt'})
     if old_price is not None and len(old_price.get_text().strip()) > 0:
-        print old_price.get_text()
         data_point['old_price'] = float(re.sub(r'\D', '', old_price.get_text().strip()))/100
     price = entry.find('span', {'class': 'price'}).get_text()
     data_point['price'] = float(re.sub(r'\D', '', price))/100
