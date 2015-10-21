@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="src" path="config"/>
+	<classpathentry kind="lib" path="lib/avro-1.7.4.jar"/>
+	<classpathentry kind="lib" path="lib/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-configuration-1.6.jar"/>
+	<classpathentry kind="lib" path="lib/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.3.jar"/>
+	<classpathentry kind="lib" path="lib/guava-11.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-auth-2.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-common-2.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-mapreduce-client-common-2.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-mapreduce-client-core-2.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-mapreduce-client-jobclient-2.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-yarn-api-2.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-yarn-common-2.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-core-asl-1.8.8.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-mapper-asl-1.8.8.jar"/>
+	<classpathentry kind="lib" path="lib/junit-4.10.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="lib/mockito-all-1.8.5.jar"/>
+	<classpathentry kind="lib" path="lib/mrunit-1.0.0-hadoop2.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.7.5.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.7.5.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
