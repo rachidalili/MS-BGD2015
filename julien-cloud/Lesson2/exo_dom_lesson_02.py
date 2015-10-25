@@ -1,12 +1,9 @@
 import urllib2
 from bs4 import BeautifulSoup
 import re
-import pandas as pd
 
 data_table = []
-
 url_template = "http://alize2.finances.gouv.fr/communes/eneuro/detail.php?icom=056&dep=075&type=BPS&param=5&exercice="
-
 extracted_rows = {
     u'TOTAL DES PRODUITS DE FONCTIONNEMENT = A': 'A',
     u'TOTAL DES CHARGES DE FONCTIONNEMENT = B': 'B',

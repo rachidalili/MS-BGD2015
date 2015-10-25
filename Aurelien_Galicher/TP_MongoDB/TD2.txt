@@ -1,0 +1,29 @@
+#démarrer la base de donnée
+mongod --dbpath temp/data --smallfiles
+
+fermeture du server
+use admin
+db.shutdownServer()
+
+voir le site: http://www.tutorialspoint.com/mongodb/mongodb_query_document.htm
+
+Exercice 2
+
+
+Valeur moyenne de y pour chaque x 
+var mapf = function() {emit(this.x, this.y);};
+var reducef = function(k, v) {return Array.avg(v)};
+db.xyz.mapReduce(mapf, reducef, {out: "avgtest"});
+
+Valeur moyenne de z pour chaque y 
+var mapf = function() {emit(this.y, this.z);};
+var reducef = function(k, v) {return Array.avg(v)};
+db.xyz.mapReduce(mapf, reducef, {out: "avgtestyz"});
+
+Moyenne de la somme de x, y pour chaque z
+var mapf = function() {emit(this.z, (this.y + this.x));};
+var reducef = function(k, v) {return Array.avg(v)};
+db.xyz.mapReduce(mapf, reducef, {out: "avgtestzavgxy"});
+
+an+1= 0.5*(an*bn)/(an+bn)
+bn+1= sqrt(an+1*bn)
