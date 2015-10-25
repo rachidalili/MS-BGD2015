@@ -1,23 +1,23 @@
-# Script tested with Python 3.4
+# coding: utf8
+
+# Script tested with Python 3.5.0 and 2.7.10
 # Course INFMDI 721 - Lesson 3
 # Author : Guillaume MOHR
 
-# IMPORTANT 1 : the script is written for Python 3.4
-#               it uses the standard library concurrent.futures
-#               which in this case increases dramatically the speed
-#               of the program with only a few more lines of code. 
-
-# IMPORTANT 2 : the script nees an authentification to GitHub
+# IMPORTANT   : the script nees an authentification to GitHub
 #               In order to execute it, a valide username / password
 #               or username / token have to be submitted at the prompt
 
+# To improve compatibility with Python 2.x:
+from __future__ import unicode_literals 
 
 import requests
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from multiprocessing.dummy import Pool
 from bs4 import BeautifulSoup
 from numpy import mean
 from getpass import getpass
 import pandas as pd
+from sys import version_info
 
 
 def authentification():
@@ -28,12 +28,16 @@ def authentification():
     --------
     tuple (username, password)
     """
-    username = input('GitHub username:')
+    # To get user input, we need to test Python version :(
+    if version_info[0] > 2:
+        username = input('GitHub username:')
+    else:
+        username = raw_input('GitHub username:')
     password = getpass()
     r = requests.get('https://api.github.com/user', auth=(username, password))
     if r.status_code != 200:
         print('Incorrect username/password, please retry')
-        (username, password) = authentification()
+        return authentification()
     return (username, password)
 
 
@@ -48,9 +52,7 @@ def getContributors(auth):
     r = requests.get(url='https://gist.github.com/paulmillr/2657075/',
             auth=auth)
     soup = BeautifulSoup(r.text, 'html.parser')
-    trs = soup('tbody')[0].select('tr')
-    for tr in trs:
-        users.append(tr.select_one('a').text)
+    users = [tr.select_one('a').text for tr in soup('tbody')[0].select('tr')]
     return users
 
 
@@ -81,13 +83,14 @@ def rankContributors(max_workers=50):
     --------
     A Pandas DataFrame with a column of users' name and their average score
     """
+    # We get a basic authentification method
     auth = authentification()
-    user_star = [] # result dictionary 
-    users = getContributors(auth) # list of users
+    # We get the list of user by scrapping
+    users = getContributors(auth)
+    # Using GitHub API we launch several threads to request repositories info
+    pool = Pool(processes=max_workers)
     gUAS = lambda u : getUserAverageStars(u, auth) # partial function used in map
-    # Launch the concurrent threads 
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        user_star = [(user, score) for user, score in zip(users, executor.map(gUAS, users))]
+    user_star = [(user, score) for user, score in zip(users, pool.map(gUAS, users))]
     # Sort and put in a pandas dataframe
     user_star.sort(key=lambda x: x[1], reverse=True)
     dat = pd.DataFrame(data=list(zip(*user_star)), index=['Contributor', 'StarScore']).T
@@ -95,6 +98,9 @@ def rankContributors(max_workers=50):
 
 
 if __name__ == '__main__':
+    # Main function
     rank = rankContributors()
+    # Write the results to a file
     rank.to_csv('mostStarredContributors')
+    # Print the result to the screen
     print(rank)
