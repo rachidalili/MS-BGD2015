@@ -33,5 +33,5 @@ for i in range(0, len(users)):
 sorted_users = sorted(users, key=lambda user: user['stargazers_avg'])
 
 # Print out
-for user in users:
+for user in sorted_users:
     print "%s: %0.2f" % (user['login'], user['stargazers_avg'])
