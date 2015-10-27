@@ -5,7 +5,7 @@ __author__ = 'catherine'
 #
 
 github_api_url = "https://api.github.com"
-my_token = "8e69b4416eb09b04753e33e627b0e70697793a15"
+my_token = ""
 
 import requests
 from bs4 import BeautifulSoup
