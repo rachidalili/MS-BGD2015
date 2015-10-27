@@ -8,13 +8,8 @@ soup = BeautifulSoup(page.text)
 
 prdtBloc = soup.find_all("div", class_='prdtBloc')
 
+prdtDATA = {}
 for prdt in prdtBloc:
-
-    href = prdt.find_all("a", href=True)
-
-    print("href", href)
-
-    prdtPage = requests.get(href)
-    prdtSoup = BeautifulSoup(prdtPage.text)
-
-    rdtSoup.prettify()
+    prdt = {}
+    prdt['name'] = prdt.find("div", class_='prdtBTit').get_ext()
+    prdt['url'] = prdt.find("a").get('href')
