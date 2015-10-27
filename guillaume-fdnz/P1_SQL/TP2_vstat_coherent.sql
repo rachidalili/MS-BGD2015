@@ -4,12 +4,12 @@ CREATE OR REPLACE PROCEDURE vstat(idVin INTEGER) AS
   cursor V_REGIONSPROD is Select distinct P.region,count(P.np) as nombreProducteurs from Producteurs P, Recoltes, Vins
                           where P.NP=RECOLTES.NP and VINS.NV=RECOLTES.NV and VINS.NV=idVin
                           group by P.REGION ;
-  -- Selection des villes classées par ordre décroissant de nombre bouteille d'idVin vendues
+-- Selection des villes classées par ordre décroissant de nombre bouteille d'idVin vendues
   cursor V_VILLESCLASSEMENTTOTAL is Select distinct lieu,sum(qte) as totalParVille from Achats
-                                    where nv=12 group by lieu order by sum(qte) desc;
+                                    where nv=idVin group by lieu order by sum(qte) desc;
 -- Selection par année des villes classées par ordre décroissant de nombre bouteille d'idVin vendues
   cursor V_VILLESCLASSEMENTANNEE is Select distinct lieu,sum(qte) as totalParVille,extract(year from dates) as annee from Achats
-                                    where nv=12 group by lieu,extract(year from dates) order by sum(qte) desc;
+                                    where nv=idVin group by lieu,extract(year from dates) order by sum(qte) desc;
 
 BEGIN
   dbms_output.new_line;

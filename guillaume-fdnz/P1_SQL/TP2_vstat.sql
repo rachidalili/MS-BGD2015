@@ -1,4 +1,3 @@
--- Guillaume Fidanza
 CREATE OR REPLACE PROCEDURE vstat(idVin INTEGER) AS
 --DECLARE
 --Selection des regions de production du vin demande (idVin) et le nombre de producteurs/region
@@ -6,10 +5,10 @@ CREATE OR REPLACE PROCEDURE vstat(idVin INTEGER) AS
                           where P.NP=RECOLTES.NP and VINS.NV=RECOLTES.NV and VINS.NV=idVin
                           group by P.REGION ;
   cursor V_VILLESCLASSEMENTTOTAL is Select distinct lieu,sum(qte) as totalParVille from Achats
-                                    where nb=12 group by lieu order by sum(qte) desc;
+                                    where nb=idVin group by lieu order by sum(qte) desc;
 
   cursor V_VILLESCLASSEMENTANNEE is Select distinct lieu,sum(qte) as totalParVille,extract(year from dates) as annee from Achats
-                                    where nb=12 group by lieu,extract(year from dates) order by sum(qte) desc;
+                                    where nb=idVin group by lieu,extract(year from dates) order by sum(qte) desc;
 
 BEGIN
   dbms_output.new_line;
@@ -32,3 +31,5 @@ BEGIN
    end loop;
 END;
 /
+-- Pour exécuter: 
+-- execute vstat(12);
