@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+import numpy as np
+import pandas as pd
 
 
 def crawling():
@@ -8,36 +10,36 @@ def crawling():
     page = requests.get('https://gist.github.com/paulmillr/2657075')
     soup = BeautifulSoup(page.text)
 
-    print(soup('table'))
+    f = open('login_list.csv', 'w')
 
-    for i in range(1,257):
-        selector = 'tr:nth-of-type(' + str(i) + ') td:nth-of-type(2)'
+    for row in soup.findAll('table')[0].tbody.findAll('tr'):
+        f.write(row.findAll('a')[0].contents[0] + "\n")
 
-        text = soup('table').select(selector)[0].text
+    f.close()
 
-        print(text)
-
-    href = soup.select("th > td")
-
-    print(href)
-
-    #for link in href:
-    #        print(link['href'])
-
-
-    #cells = soup.select("th", scope_="#1")
-
-    #name = soup.select("# > td > ol > li > span > strong > a")
-
-
-    #print(cells)
-
-
+    return
 
 
 def API():
-    answer = requests.get("https://api.github.com/search/code?q={query}{&page,per_page,sort,order}")
 
-    answer = json.load(answer)
+    logins = pd.read_csv('login_list.csv', header=None)
 
-    print(answer)
+    contributors = {log[0]: [] for log in logins.values}
+    print(contributors)
+
+    for login in logins.values:
+        user = login[0]
+        answer = requests.get("https://api.github.com/users/" + user + "/repos")
+
+        answer = answer.json()
+
+        print(user, len(answer))
+
+        for i in range(len(answer)):
+            repo_name = answer[i]['name']
+            repo_stars = answer[i]['stargazers_count']
+
+            print(repo_name, repo_stars)
+            contributors[user] = contributors[user] + [repo_stars]
+
+    print(contributors)
