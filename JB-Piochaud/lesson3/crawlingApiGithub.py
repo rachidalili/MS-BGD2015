@@ -8,12 +8,13 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
-urlIdentification = "https://api.github.com"
-urlToCrawl = "https://gist.github.com/paulmillr/2657075"
+urlApi = "https://api.github.com"
+urlToUser = "https://gist.github.com/paulmillr/2657075"
 
 def authentification(url):
     url_dynamic = {'access_token': 'piochaud'}
     request = requests.get(url, headers = url_dynamic)
+    print(request.text)
     return request.status_code
     
 def getSoupFromUrl(url):
@@ -31,29 +32,34 @@ def getTableFromSoup(soup):
     return el[0]
     
 def getNamesFromTable(table):
-    TableOfValues = ["unknown"]*256
+    TableOfNames = ["unknown"]*256
     j = 1
     for i in range(0, 256):
             selectorRow = 'tr:nth-of-type(' + str(i+2) + ') '
             selectorCol = 'td:nth-of-type(' + str(j) + ')'
             selector = selectorRow + selectorCol
-            #TableOfValues[i] = selector
-            #print(table.select(selector)[2].text)
-            TableOfValues[i] = table.select(selector)[0].text
+            TableOfNames[i] = table.select(selector)[0].text
+            TableOfNames[i] = str(TableOfNames[i].split(" ")[0])
             #TableOfValues[i] = TableOfValues[i].replace(u'\xa0', u'')
-    return TableOfValues
+    return TableOfNames
+    
+def getStarsTableNames(url, tableNames):
+    #for el in tableNames:
+    urlUser = urlApi + "/users/" + tableNames[0] + "/repos"
+    #print(urlUser)
+    status = authentification(url)
+    print(status)
+    return urlUser
 
 def main():
-    status = authentification(urlIdentification)
+    status = authentification(urlApi)
     print(status)
-    #request = getRequestFromUrl(urlToCrawl)
-    #print(request)
-    soup = getSoupFromUrl(urlToCrawl)
+    soup = getSoupFromUrl(urlToUser)
     table = getTableFromSoup(soup)
-    names = getNamesFromTable(table)
-    print(names)
+    tableNames = getNamesFromTable(table)
+    #print(tableNames)
+    getStarsTableNames(urlApi, tableNames)
+   
 
-
-        
 if __name__ == '__main__':
     main()  
