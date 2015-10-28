@@ -11,6 +11,8 @@ from bs4 import BeautifulSoup
 import urllib2, base64
 import operator
 import json
+from Tkinter import *
+
 
 ################################
 
@@ -20,7 +22,7 @@ import json
 
 GIT_LOGIN = 'MalikOussalah'
 # Get your token there : https://github.com/settings/tokens/new
-AUTH_KEY = '9442e5ba8bd8ef216367008f9c9341500d59fc99'
+AUTH_KEY = 'f198644cf67fd721cc74c73fbdd67fb62070f601'
 
 ##################################################################
 
@@ -73,8 +75,39 @@ def GetJson (user):
 
 #Main###############################
 
-start(("MalikOussalah","VX6yLCbv"))
 
-####################################
+#Creation Fenetre login/password####################################
+master = Tk()
+
+def makeentry(parent, caption, width=None, **options):
+    """create an entry login/password""""
+    Label(parent, text=caption).pack(side=LEFT)
+    entry = Entry(parent, **options)
+    if width:
+        entry.config(width=width)
+    entry.pack(side=LEFT)
+    return entry
+
+def getinfo():
+    """launch the crawling of user and password"""
+    return start((user.get(), password.get()))
+
+
+user = makeentry(master, "Login: ", 10)
+password = makeentry(master, "Password: ", 10, show="*")
+content = StringVar()
+entry = Entry(master)
+
+
+text = content.get()
+content.set(text)
+b = Button(master, text="start", width=10, command=getinfo)
+b.pack()
+
+master.mainloop()
+####################################################################
+#start(("MalikOussalah","VX6yLCbv"))
+
+
           
 
