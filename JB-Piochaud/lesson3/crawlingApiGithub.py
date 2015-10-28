@@ -15,12 +15,6 @@ def authentification(url):
     url_dynamic = {'access_token': 'piochaud'}
     request = requests.get(url, headers = url_dynamic)
     return request.status_code
-  
-my_token = "yop"  
-rqHeader = {"Authorization": "token "+my_token}
-def connectWithToken(url):
-    request = requests.get(url+"/user", headers=rqHeader)
-    return request.status_code
     
 def getSoupFromUrl(url):
     request = requests.get(url)
@@ -29,18 +23,37 @@ def getSoupFromUrl(url):
     
 def getRequestFromUrl(url):
     request = requests.get(url)
-    print(request.text)
     return request, request.status_code
 
+def getTableFromSoup(soup):
+    el = soup.findAll("table")
+    #print(el[0].text)
+    return el[0]
+    
+def getNamesFromTable(table):
+    TableOfValues = ["unknown"]*256
+    j = 1
+    for i in range(0, 256):
+            selectorRow = 'tr:nth-of-type(' + str(i+2) + ') '
+            selectorCol = 'td:nth-of-type(' + str(j) + ')'
+            selector = selectorRow + selectorCol
+            #TableOfValues[i] = selector
+            #print(table.select(selector)[2].text)
+            TableOfValues[i] = table.select(selector)[0].text
+            #TableOfValues[i] = TableOfValues[i].replace(u'\xa0', u'')
+    return TableOfValues
 
 def main():
-    connectWithToken(urlIdentification)
-    request = getRequestFromUrl(urlToCrawl)
-    print(request)
-    #status = authentification()
-    #print(status)
-    #status = connectWithToken()
-    #print(status)
+    status = authentification(urlIdentification)
+    print(status)
+    #request = getRequestFromUrl(urlToCrawl)
+    #print(request)
+    soup = getSoupFromUrl(urlToCrawl)
+    table = getTableFromSoup(soup)
+    names = getNamesFromTable(table)
+    print(names)
+
+
         
 if __name__ == '__main__':
     main()  
