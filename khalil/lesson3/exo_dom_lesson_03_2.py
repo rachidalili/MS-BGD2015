@@ -11,7 +11,6 @@ url = "https://gist.github.com/paulmillr/2657075"
 html = urllib2.urlopen(url).read()
 soup = BeautifulSoup(html, 'html.parser')
 
-gh = login('chkhalil', password='bismallahazerty123A')
 dict_rank = {}
 
 def user_note(user_name):
