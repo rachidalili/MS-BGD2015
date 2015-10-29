@@ -23,13 +23,12 @@ print data_df
 villes = data_df['Ville']
 
 dests = villes[0:10]
+
 for ville in villes[0:10]:
 	print ville
 	for dest in dests:
-		url = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=' + ville + '&destinations=' + dest +'&mode=bicycling&language=fr-FR&key=AIzaSyDLdf1PFF0DpZaRJjHUm52HPAmWH9ZxwIk'
-		googleResponse = urllib.urlopen(url)
-		jsonResponse = json.loads(googleResponse.read())
-		row = jsonResponse['rows']
-		elements = row[0]['elements']
+		url = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=' + ville + '&destinations=' + dest +'&mode=bicycling&language=fr-FR&key='
 		distance = removeSpecialCarFromText(elements[0]['distance']['text'])
 		print ville + ' to ' + dest + ' : ' + distance
+
+
