@@ -1679,14 +1679,22 @@ div#notebook {
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[13]:
+In&nbsp;[3]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">requests</span>
+<div class="highlight"><pre><span class="c"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">@author: msalem</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
-<span class="n">token_</span> <span class="o">=</span> <span class="s">&#39;56d5c2991ee73fc1824a83337a05cc37f7809677&#39;</span>
+<span class="kn">import</span> <span class="nn">getpass</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">urlparse</span> <span class="kn">import</span> <span class="n">urljoin</span>
+<span class="kn">import</span> <span class="nn">urllib2</span><span class="o">,</span> <span class="nn">base64</span>
 </pre></div>
 
 </div>
@@ -1697,7 +1705,61 @@ In&nbsp;[13]:
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[2]:
+In&nbsp;[17]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">get_a_new_token_for_username</span><span class="p">():</span>
+    <span class="n">GITHUB_API</span> <span class="o">=</span> <span class="s">&#39;https://api.github.com&#39;</span>
+
+    <span class="c">#</span>
+    <span class="c"># User Input</span>
+    <span class="c">#</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;Github username: &#39;</span><span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="s">&#39;Github password: &#39;</span><span class="p">)</span>
+    <span class="n">note</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;Note (optional): &#39;</span><span class="p">)</span>
+    <span class="c">#</span>
+    <span class="c"># Compose Request</span>
+    <span class="c">#</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">urljoin</span><span class="p">(</span><span class="n">GITHUB_API</span><span class="p">,</span> <span class="s">&#39;authorizations&#39;</span><span class="p">)</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">note</span><span class="p">:</span>
+        <span class="n">payload</span><span class="p">[</span><span class="s">&#39;note&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">note</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">),</span><span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
+    <span class="c">#</span>
+    <span class="c"># Parse Response</span>
+    <span class="c">#</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span><span class="s">&#39;token&#39;</span><span class="p">]</span>
+    <span class="k">print</span> <span class="s">&#39;New token created&#39;</span>
+    
+    <span class="k">return</span> <span class="n">token</span><span class="p">,</span> <span class="n">username</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight"><pre><span class="n">token_</span><span class="p">,</span> <span class="n">user</span> <span class="o">=</span> <span class="n">get_a_new_token_for_username</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[7]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
@@ -1715,59 +1777,17 @@ In&nbsp;[2]:
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[4]:
+In&nbsp;[8]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="c"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Created on Wed Oct 28 19:25:15 2015</span>
-
-<span class="sd">@author: msalem</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
-<span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">urllib2</span><span class="o">,</span> <span class="nn">base64</span>
-
-<span class="n">token</span> <span class="o">=</span> <span class="s">&#39;56d5c2991ee73fc1824a83337a05cc37f7809677&#39;</span>
-<span class="n">user</span> <span class="o">=</span> <span class="s">&#39;masalem&#39;</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s">&#39;https://api.github.com/&#39;</span>
-
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;Authorization&#39;</span><span class="p">:</span><span class="s">&#39;token </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">token</span> <span class="p">,</span> <span class="s">&#39;content-type&#39;</span><span class="p">:</span> <span class="s">&#39;application/json&#39;</span><span class="p">}</span>
-<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;paulmillr&#39;</span><span class="p">:</span> <span class="s">&#39;2657075&#39;</span><span class="p">}</span>
-<span class="n">payload2</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;callback&#39;</span><span class="p">:</span><span class="s">&#39;foo&#39;</span><span class="p">}</span>
+<div class="highlight"><pre><span class="n">url</span> <span class="o">=</span> <span class="s">&#39;https://api.github.com/&#39;</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;Authorization&#39;</span><span class="p">:</span><span class="s">&#39;token </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">token_</span> <span class="p">,</span> <span class="s">&#39;content-type&#39;</span><span class="p">:</span> <span class="s">&#39;application/json&#39;</span><span class="p">}</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-<span class="n">text</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span>
-
-<span class="k">print</span> <span class="n">text</span>
-
-
-
-<span class="c">#gists_url = https://api.github.com/gists{/gist_id}</span>
-
-<span class="k">print</span> <span class="s">&quot;++++++++++++++++++++++++++++++++++++++++&quot;</span>
 </pre></div>
 
 </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-{&quot;current_user_url&quot;:&quot;https://api.github.com/user&quot;,&quot;current_user_authorizations_html_url&quot;:&quot;https://github.com/settings/connections/applications{/client_id}&quot;,&quot;authorizations_url&quot;:&quot;https://api.github.com/authorizations&quot;,&quot;code_search_url&quot;:&quot;https://api.github.com/search/code?q={query}{&amp;page,per_page,sort,order}&quot;,&quot;emails_url&quot;:&quot;https://api.github.com/user/emails&quot;,&quot;emojis_url&quot;:&quot;https://api.github.com/emojis&quot;,&quot;events_url&quot;:&quot;https://api.github.com/events&quot;,&quot;feeds_url&quot;:&quot;https://api.github.com/feeds&quot;,&quot;followers_url&quot;:&quot;https://api.github.com/user/followers&quot;,&quot;following_url&quot;:&quot;https://api.github.com/user/following{/target}&quot;,&quot;gists_url&quot;:&quot;https://api.github.com/gists{/gist_id}&quot;,&quot;hub_url&quot;:&quot;https://api.github.com/hub&quot;,&quot;issue_search_url&quot;:&quot;https://api.github.com/search/issues?q={query}{&amp;page,per_page,sort,order}&quot;,&quot;issues_url&quot;:&quot;https://api.github.com/issues&quot;,&quot;keys_url&quot;:&quot;https://api.github.com/user/keys&quot;,&quot;notifications_url&quot;:&quot;https://api.github.com/notifications&quot;,&quot;organization_repositories_url&quot;:&quot;https://api.github.com/orgs/{org}/repos{?type,page,per_page,sort}&quot;,&quot;organization_url&quot;:&quot;https://api.github.com/orgs/{org}&quot;,&quot;public_gists_url&quot;:&quot;https://api.github.com/gists/public&quot;,&quot;rate_limit_url&quot;:&quot;https://api.github.com/rate_limit&quot;,&quot;repository_url&quot;:&quot;https://api.github.com/repos/{owner}/{repo}&quot;,&quot;repository_search_url&quot;:&quot;https://api.github.com/search/repositories?q={query}{&amp;page,per_page,sort,order}&quot;,&quot;current_user_repositories_url&quot;:&quot;https://api.github.com/user/repos{?type,page,per_page,sort}&quot;,&quot;starred_url&quot;:&quot;https://api.github.com/user/starred{/owner}{/repo}&quot;,&quot;starred_gists_url&quot;:&quot;https://api.github.com/gists/starred&quot;,&quot;team_url&quot;:&quot;https://api.github.com/teams&quot;,&quot;user_url&quot;:&quot;https://api.github.com/users/{user}&quot;,&quot;user_organizations_url&quot;:&quot;https://api.github.com/user/orgs&quot;,&quot;user_repositories_url&quot;:&quot;https://api.github.com/users/{user}/repos{?type,page,per_page,sort}&quot;,&quot;user_search_url&quot;:&quot;https://api.github.com/search/users?q={query}{&amp;page,per_page,sort,order}&quot;}
-++++++++++++++++++++++++++++++++++++++++
-
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -1775,32 +1795,12 @@ In&nbsp;[4]:
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[5]:
+In&nbsp;[9]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="c"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Created on Wed Oct 28 19:25:15 2015</span>
-
-<span class="sd">@author: msalem</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
-
-<span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
-
-<span class="k">def</span> <span class="nf">get_soup_for_page</span><span class="p">(</span><span class="n">url_base</span><span class="p">):</span>
-    <span class="n">page</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_base</span><span class="p">)</span>
-    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s">&#39;html.parser&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">soup</span>
-    
-    
-
-
-<span class="n">URL</span> <span class="o">=</span> <span class="s">&#39;https://gist.github.com/paulmillr/2657075&#39;</span>
-<span class="n">soup</span> <span class="o">=</span> <span class="n">get_soup_for_page</span><span class="p">(</span><span class="n">URL</span><span class="p">)</span>
+<div class="highlight"><pre><span class="n">URL_ranking</span> <span class="o">=</span> <span class="s">&#39;https://gist.github.com/paulmillr/2657075&#39;</span>
+<span class="n">soup</span> <span class="o">=</span> <span class="n">get_soup_for_page</span><span class="p">(</span><span class="n">URL_ranking</span><span class="p">)</span>
 
 <span class="n">tables</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">&#39;table&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;cellspacing&quot;</span><span class="p">:</span><span class="s">&quot;0&quot;</span><span class="p">})</span>
 <span class="n">lines</span> <span class="o">=</span> <span class="n">tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">&#39;tbody &gt; tr&#39;</span><span class="p">)</span>
@@ -1809,7 +1809,8 @@ In&nbsp;[5]:
 <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">256</span><span class="p">):</span>
     <span class="n">login</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
     <span class="n">logins</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">login</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-    <span class="k">print</span> <span class="n">logins</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="c">#print logins[idx]</span>
+<span class="k">print</span> <span class="s">&quot;Nombre d&#39;utilisateurs détectés: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">logins</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -1823,262 +1824,7 @@ In&nbsp;[5]:
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-Ocramius
-taylorotwell
-GrahamCampbell
-brianchandotcom
-michalbe
-fabpot
-bevacqua
-kevinsawicki
-ornicar
-sebmck
-rkh
-KrauseFx
-mrmrs
-hadley
-springmeyer
-c9s
-mattdesl
-robrix
-stefanpenner
-feross
-rstacruz
-michaelklishin
-dcramer
-ebidel
-jgm
-phodal
-tmcw
-cvrebert
-Raynos
-mikermcneil
-jdalton
-mitchellh
-josevalim
-JedWatson
-markstory
-gorhill
-steveklabnik
-zcbenz
-addyosmani
-gaearon
-mafintosh
-ai
-SamyPesse
-ChenYilong
-kevva
-substack
-jamesward
-jspahrsummers
-josegonzalez
-orta
-benbalter
-ddollar
-pippinsplugins
-JakeWharton
-yihui
-ericholscher
-ekmett
-yiminghe
-evancz
-3rd-Eden
-nathansobo
-webmozart
-mcollina
-sferik
-frsyuki
-alex
-kartik-v
-swannodette
-dominictarr
-kylef
-maxogden
-leafo
-r7kamura
-creationix
-EisenbergEffect
-afollestad
-indutny
-josh
-ashfurrow
-HugoGiraudel
-weaverryan
-rxin
-jedisct1
-kazuho
-kytrinyx
-mgechev
-fsouza
-happypeter
-soumith
-clowwindy
-zenorocha
-rdegges
-rafaelfranca
-drnic
-gdi2290
-staltz
-purcell
-madskristensen
-rwaldron
-chrisdone
-jfrazelle
-leebyron
-derickr
-mikepenz
-chjj
-parkr
-kohsuke
-armon
-RubyLouvre
-mikolalysenko
-torvalds
-arunoda
-bbatsov
-stof
-matthewmccullough
-yyx990803
-Unknwon
-willdurand
-tenderlove
-tqchen
-kana
-nzakas
-graydon
-zilongshanren
-mattn
-remy
-ayende
-lihaoyi
-chneukirchen
-johnpapa
-samdark
-domenic
-paulcbetts
-bergie
-indirect
-schacon
-davecheney
-kripken
-appleboy
-jlord
-alloy
-vladikoff
-hueniverse
-STRd6
-SamSaffron
-luin
-tokuhirom
-michael
-TooTallNate
-PaulKinlan
-kriskowal
-karan
-numbbbbb
-passy
-marijnh
-audreyt
-aFarkas
-rvagg
-apotonick
-svenfuchs
-mjackson
-arturoc
-maryrosecook
-mrdoob
-jonathanong
-mbostock
-prakhar1989
-mourner
-balupton
-headius
-jessesquires
-swankjesse
-sahat
-nex3
-simurai
-zpao
-tomchristie
-fzaninotto
-bdarnell
-amueller
-shiffman
-darwin
-davidfowl
-junegunn
-gitster
-mathiasbynens
-olivergierke
-matyhtf
-mdo
-desandro
-photonstorm
-sebastianbergmann
-matthewmueller
-bradfitz
-weavejester
-fengmk2
-stephenplusplus
-aslakhellesoy
-arun-gupta
-alanhamlett
-STRML
-imathis
-tbranyen
-isaacs
-Shougo
-ibdknox
-pedrovgs
-kelseyhightower
-jakevdp
-munificent
-andrew
-contra
-mitsuhiko
-wbond
-ahmetalpbalkan
-jezdez
-hughsk
-CharlinFeng
-fatih
-DataTables
-rsc
-timoxley
-odersky
-shama
-pydanny
-technoweenie
-muan
-jordansissel
-sorah
-freddix
-sokra
-ianb
-andreamazz
-antirez
-soyjavi
-Seldaek
-akrabat
-aaronpk
-mnot
-michaelliao
-bboyfeiyu
-sole
-lepture
-robdodson
-soimort
-mgcrea
-tommy351
-barryvdh
-jiyinyiyong
-justintadlock
-HenrikJoreteg
-Trinea
-caitp
-philipwalton
-laruence
-spicyj
+Nombre d&apos;utilisateurs détectés: 256
 
 </pre>
 </div>
@@ -2091,7 +1837,7 @@ spicyj
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[31]:
+In&nbsp;[10]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
@@ -2114,7 +1860,7 @@ In&nbsp;[31]:
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[39]:
+In&nbsp;[11]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
@@ -2130,22 +1876,7 @@ In&nbsp;[39]:
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class="highlight"><pre> 
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[52]:
+In&nbsp;[12]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
@@ -2155,8 +1886,8 @@ In&nbsp;[52]:
     <span class="n">total_stars</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">counter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">number_of_projects</span><span class="p">):</span>
         <span class="n">total_stars</span> <span class="o">=</span> <span class="n">total_stars</span> <span class="o">+</span> <span class="n">get_project_stars_count</span><span class="p">(</span><span class="n">projects_of_fabpot</span><span class="p">[</span><span class="n">counter</span><span class="p">])</span>
-    <span class="n">score</span> <span class="o">=</span> <span class="n">total_stars</span> <span class="o">/</span> <span class="n">number_of_projects</span>
-    <span class="k">print</span> <span class="s">&quot;score moyen pour &quot;</span> <span class="o">+</span> <span class="n">user</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">score</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; (&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">number_of_projects</span><span class="p">)</span><span class="o">+</span> <span class="s">&quot; projects)&quot;</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">total_stars</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">number_of_projects</span><span class="p">)</span>
+    <span class="c">#print &quot;score moyen pour &quot; + user + &quot;: &quot; + str(score) + &quot; (&quot; + str(number_of_projects)+ &quot; projects)&quot;</span>
     <span class="k">return</span> <span class="n">score</span>
 </pre></div>
 
@@ -2168,7 +1899,7 @@ In&nbsp;[52]:
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[53]:
+In&nbsp;[14]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
@@ -2181,289 +1912,19 @@ In&nbsp;[53]:
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-score moyen pour Ocramius: 4 (30 projects)
-score moyen pour taylorotwell: 4 (2 projects)
-score moyen pour GrahamCampbell: 60 (21 projects)
-score moyen pour brianchandotcom: 7 (7 projects)
-score moyen pour michalbe: 4 (30 projects)
-score moyen pour fabpot: 43 (26 projects)
-score moyen pour bevacqua: 21 (30 projects)
-score moyen pour kevinsawicki: 5 (30 projects)
-score moyen pour ornicar: 7 (30 projects)
-score moyen pour sebmck: 1 (30 projects)
-score moyen pour rkh: 28 (30 projects)
-score moyen pour KrauseFx: 309 (13 projects)
-score moyen pour mrmrs: 218 (30 projects)
-score moyen pour hadley: 44 (30 projects)
-score moyen pour springmeyer: 9 (30 projects)
-score moyen pour c9s: 14 (30 projects)
-score moyen pour mattdesl: 2 (30 projects)
-score moyen pour robrix: 16 (30 projects)
-score moyen pour stefanpenner: 0 (30 projects)
-score moyen pour feross: 49 (30 projects)
-score moyen pour rstacruz: 36 (30 projects)
-score moyen pour michaelklishin: 13 (30 projects)
-score moyen pour dcramer: 57 (30 projects)
-score moyen pour ebidel: 83 (30 projects)
-score moyen pour jgm: 145 (30 projects)
-score moyen pour phodal: 89 (27 projects)
-score moyen pour tmcw: 35 (30 projects)
-score moyen pour cvrebert: 12 (29 projects)
-score moyen pour Raynos: 6 (30 projects)
-score moyen pour mikermcneil: 1 (30 projects)
-score moyen pour jdalton: 11 (14 projects)
-score moyen pour mitchellh: 127 (30 projects)
-score moyen pour josevalim: 107 (30 projects)
-score moyen pour JedWatson: 46 (30 projects)
-score moyen pour markstory: 29 (30 projects)
-score moyen pour gorhill: 329 (19 projects)
-score moyen pour steveklabnik: 3 (30 projects)
-score moyen pour zcbenz: 58 (30 projects)
-score moyen pour addyosmani: 369 (30 projects)
-score moyen pour gaearon: 15 (30 projects)
-score moyen pour mafintosh: 33 (30 projects)
-score moyen pour ai: 136 (30 projects)
-score moyen pour SamyPesse: 357 (30 projects)
-score moyen pour ChenYilong: 219 (27 projects)
-score moyen pour kevva: 14 (30 projects)
-score moyen pour substack: 23 (30 projects)
-score moyen pour jamesward: 0 (30 projects)
-score moyen pour jspahrsummers: 128 (30 projects)
-score moyen pour josegonzalez: 16 (30 projects)
-score moyen pour orta: 42 (30 projects)
-score moyen pour benbalter: 3 (30 projects)
-score moyen pour ddollar: 6 (30 projects)
-score moyen pour pippinsplugins: 6 (30 projects)
-score moyen pour JakeWharton: 659 (30 projects)
-score moyen pour yihui: 54 (30 projects)
-score moyen pour ericholscher: 26 (30 projects)
-score moyen pour ekmett: 12 (30 projects)
-score moyen pour yiminghe: 1 (30 projects)
-score moyen pour evancz: 67 (30 projects)
-score moyen pour 3rd-Eden: 5 (30 projects)
-score moyen pour nathansobo: 1 (30 projects)
-score moyen pour webmozart: 21 (30 projects)
-score moyen pour mcollina: 10 (30 projects)
-score moyen pour sferik: 12 (30 projects)
-score moyen pour frsyuki: 3 (30 projects)
-score moyen pour alex: 3 (30 projects)
-score moyen pour kartik-v: 66 (30 projects)
-score moyen pour swannodette: 16 (30 projects)
-score moyen pour dominictarr: 4 (30 projects)
-score moyen pour kylef: 18 (30 projects)
-score moyen pour maxogden: 148 (30 projects)
-score moyen pour leafo: 19 (30 projects)
-score moyen pour r7kamura: 22 (30 projects)
-score moyen pour creationix: 9 (30 projects)
-score moyen pour EisenbergEffect: 8 (6 projects)
-score moyen pour afollestad: 336 (17 projects)
-score moyen pour indutny: 36 (30 projects)
-score moyen pour josh: 92 (30 projects)
-score moyen pour ashfurrow: 62 (30 projects)
-score moyen pour HugoGiraudel: 67 (25 projects)
-score moyen pour weaverryan: 0 (30 projects)
-score moyen pour rxin: 134 (30 projects)
-score moyen pour jedisct1: 33 (30 projects)
-score moyen pour kazuho: 5 (30 projects)
-score moyen pour kytrinyx: 10 (30 projects)
-score moyen pour mgechev: 203 (30 projects)
-score moyen pour fsouza: 0 (30 projects)
-score moyen pour happypeter: 13 (30 projects)
-score moyen pour soumith: 28 (30 projects)
-score moyen pour clowwindy: 43 (30 projects)
-score moyen pour zenorocha: 592 (30 projects)
-score moyen pour rdegges: 43 (30 projects)
-score moyen pour rafaelfranca: 0 (30 projects)
-score moyen pour drnic: 13 (30 projects)
-score moyen pour gdi2290: 0 (30 projects)
-score moyen pour staltz: 43 (30 projects)
-score moyen pour purcell: 3 (30 projects)
-score moyen pour madskristensen: 7 (30 projects)
-score moyen pour rwaldron: 0 (30 projects)
-score moyen pour chrisdone: 20 (30 projects)
-score moyen pour jfrazelle: 59 (30 projects)
-score moyen pour leebyron: 5 (30 projects)
-score moyen pour derickr: 2 (30 projects)
-score moyen pour mikepenz: 232 (30 projects)
-score moyen pour chjj: 365 (30 projects)
-score moyen pour parkr: 3 (30 projects)
-score moyen pour kohsuke: 17 (30 projects)
-score moyen pour armon: 102 (30 projects)
-score moyen pour RubyLouvre: 98 (30 projects)
-score moyen pour mikolalysenko: 5 (30 projects)
-score moyen pour torvalds: 13831 (2 projects)
-score moyen pour arunoda: 3 (30 projects)
-score moyen pour bbatsov: 66 (30 projects)
-score moyen pour stof: 0 (30 projects)
-score moyen pour matthewmccullough: 6 (30 projects)
-score moyen pour yyx990803: 40 (30 projects)
-score moyen pour Unknwon: 126 (30 projects)
-score moyen pour willdurand: 68 (30 projects)
-score moyen pour tenderlove: 6 (30 projects)
-score moyen pour tqchen: 3 (7 projects)
-score moyen pour kana: 5 (30 projects)
-score moyen pour nzakas: 145 (30 projects)
-score moyen pour graydon: 5 (30 projects)
-score moyen pour zilongshanren: 7 (30 projects)
-score moyen pour mattn: 10 (30 projects)
-score moyen pour remy: 21 (30 projects)
-score moyen pour ayende: 9 (30 projects)
-score moyen pour lihaoyi: 187 (29 projects)
-score moyen pour chneukirchen: 48 (30 projects)
-score moyen pour johnpapa: 480 (30 projects)
-score moyen pour samdark: 2 (30 projects)
-score moyen pour domenic: 33 (30 projects)
-score moyen pour paulcbetts: 3 (30 projects)
-score moyen pour bergie: 89 (30 projects)
-score moyen pour indirect: 3 (30 projects)
-score moyen pour schacon: 8 (30 projects)
-score moyen pour davecheney: 5 (30 projects)
-score moyen pour kripken: 370 (30 projects)
-score moyen pour appleboy: 8 (30 projects)
-score moyen pour jlord: 5 (30 projects)
-score moyen pour alloy: 16 (30 projects)
-score moyen pour vladikoff: 1 (30 projects)
-score moyen pour hueniverse: 164 (15 projects)
-score moyen pour STRd6: 2 (30 projects)
-score moyen pour SamSaffron: 19 (30 projects)
-score moyen pour luin: 64 (30 projects)
-score moyen pour tokuhirom: 6 (30 projects)
-score moyen pour michael: 75 (30 projects)
-score moyen pour TooTallNate: 26 (30 projects)
-score moyen pour PaulKinlan: 4 (30 projects)
-score moyen pour kriskowal: 57 (30 projects)
-score moyen pour karan: 19 (30 projects)
-score moyen pour numbbbbb: 17 (30 projects)
-score moyen pour passy: 50 (30 projects)
-score moyen pour marijnh: 68 (25 projects)
-score moyen pour audreyt: 15 (30 projects)
-score moyen pour aFarkas: 345 (30 projects)
-score moyen pour rvagg: 32 (30 projects)
-score moyen pour apotonick: 120 (30 projects)
-score moyen pour svenfuchs: 58 (30 projects)
-score moyen pour mjackson: 16 (30 projects)
-score moyen pour arturoc: 11 (30 projects)
-score moyen pour maryrosecook: 29 (30 projects)
-score moyen pour mrdoob: 1020 (27 projects)
-score moyen pour jonathanong: 14 (30 projects)
-score moyen pour mbostock: 1457 (30 projects)
-score moyen pour prakhar1989: 487 (30 projects)
-score moyen pour mourner: 100 (27 projects)
-score moyen pour balupton: 9 (30 projects)
-score moyen pour headius: 12 (30 projects)
-score moyen pour jessesquires: 276 (30 projects)
-score moyen pour swankjesse: 122 (3 projects)
-score moyen pour sahat: 2 (30 projects)
-score moyen pour nex3: 17 (30 projects)
-score moyen pour simurai: 7 (30 projects)
-score moyen pour zpao: 1 (30 projects)
-score moyen pour tomchristie: 270 (25 projects)
-score moyen pour fzaninotto: 290 (30 projects)
-score moyen pour bdarnell: 58 (28 projects)
-score moyen pour amueller: 6 (30 projects)
-score moyen pour shiffman: 27 (30 projects)
-score moyen pour darwin: 25 (30 projects)
-score moyen pour davidfowl: 10 (30 projects)
-score moyen pour junegunn: 132 (30 projects)
-score moyen pour gitster: 78 (6 projects)
-score moyen pour mathiasbynens: 4 (30 projects)
-score moyen pour olivergierke: 6 (30 projects)
-score moyen pour matyhtf: 26 (20 projects)
-score moyen pour mdo: 368 (30 projects)
-score moyen pour desandro: 149 (30 projects)
-score moyen pour photonstorm: 629 (19 projects)
-score moyen pour sebastianbergmann: 147 (30 projects)
-score moyen pour matthewmueller: 25 (30 projects)
-score moyen pour bradfitz: 48 (30 projects)
-score moyen pour weavejester: 131 (30 projects)
-score moyen pour fengmk2: 0 (30 projects)
-score moyen pour stephenplusplus: 3 (30 projects)
-score moyen pour aslakhellesoy: 5 (30 projects)
-score moyen pour arun-gupta: 2 (30 projects)
-score moyen pour alanhamlett: 2 (30 projects)
-score moyen pour STRML: 0 (30 projects)
-score moyen pour imathis: 46 (30 projects)
-score moyen pour tbranyen: 219 (30 projects)
-score moyen pour isaacs: 17 (30 projects)
-score moyen pour Shougo: 196 (30 projects)
-score moyen pour ibdknox: 33 (30 projects)
-score moyen pour pedrovgs: 266 (29 projects)
-score moyen pour kelseyhightower: 82 (30 projects)
-score moyen pour jakevdp: 5 (30 projects)
-score moyen pour munificent: 68 (30 projects)
-score moyen pour andrew: 3 (30 projects)
-score moyen pour contra: 13 (30 projects)
-score moyen pour mitsuhiko: 691 (30 projects)
-score moyen pour wbond: 148 (30 projects)
-score moyen pour ahmetalpbalkan: 28 (30 projects)
-score moyen pour jezdez: 126 (16 projects)
-score moyen pour hughsk: 5 (30 projects)
-score moyen pour CharlinFeng: 43 (30 projects)
-score moyen pour fatih: 192 (30 projects)
-score moyen pour DataTables: 105 (30 projects)
-score moyen pour rsc: 32 (30 projects)
-score moyen pour timoxley: 2 (30 projects)
-score moyen pour odersky: 8 (8 projects)
-score moyen pour shama: 4 (30 projects)
-score moyen pour pydanny: 81 (30 projects)
-score moyen pour technoweenie: 79 (30 projects)
-score moyen pour muan: 77 (30 projects)
-score moyen pour jordansissel: 203 (30 projects)
-score moyen pour sorah: 2 (30 projects)
-score moyen pour freddix: 0 (30 projects)
-score moyen pour sokra: 0 (30 projects)
-score moyen pour ianb: 13 (30 projects)
-score moyen pour andreamazz: 265 (30 projects)
-score moyen pour antirez: 797 (30 projects)
-score moyen pour soyjavi: 5 (30 projects)
-score moyen pour Seldaek: 3 (30 projects)
-score moyen pour akrabat: 6 (30 projects)
-score moyen pour aaronpk: 4 (30 projects)
-score moyen pour mnot: 48 (30 projects)
-score moyen pour michaelliao: 39 (30 projects)
-score moyen pour bboyfeiyu: 100 (30 projects)
-score moyen pour sole: 10 (30 projects)
-score moyen pour lepture: 69 (30 projects)
-score moyen pour robdodson: 15 (30 projects)
-score moyen pour soimort: 1 (30 projects)
-score moyen pour mgcrea: 220 (30 projects)
-score moyen pour tommy351: 20 (30 projects)
-score moyen pour barryvdh: 2 (30 projects)
-score moyen pour jiyinyiyong: 0 (30 projects)
-score moyen pour justintadlock: 48 (30 projects)
-score moyen pour HenrikJoreteg: 21 (30 projects)
-score moyen pour Trinea: 854 (18 projects)
-score moyen pour caitp: 19 (30 projects)
-score moyen pour philipwalton: 395 (30 projects)
-score moyen pour laruence: 123 (30 projects)
-score moyen pour spicyj: 0 (30 projects)
-
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[58]:
+In&nbsp;[15]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="nb">len</span><span class="p">(</span><span class="n">ranking</span><span class="p">)</span>
-<span class="n">ranking2</span> <span class="o">=</span> <span class="n">ranking</span>
+<div class="highlight"><pre><span class="n">ranking2</span> <span class="o">=</span> <span class="n">ranking</span>
 <span class="n">ranking2</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
-<span class="n">ranking2</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="n">ranking_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">ranking2</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;nickname&#39;</span><span class="p">,</span> <span class="s">&#39;score&#39;</span><span class="p">])</span>
+<span class="n">ranking_table</span>
 </pre></div>
 
 </div>
@@ -2475,268 +1936,328 @@ In&nbsp;[58]:
 
 
 <div class="output_area"><div class="prompt output_prompt">
-    Out[58]:</div>
+    Out[15]:</div>
 
-
-<div class="output_text output_subarea output_pyout">
-<pre>
-[[u&apos;torvalds&apos;, 13831],
- [u&apos;mbostock&apos;, 1457],
- [u&apos;mrdoob&apos;, 1020],
- [u&apos;Trinea&apos;, 854],
- [u&apos;antirez&apos;, 797],
- [u&apos;mitsuhiko&apos;, 691],
- [u&apos;JakeWharton&apos;, 659],
- [u&apos;photonstorm&apos;, 629],
- [u&apos;zenorocha&apos;, 592],
- [u&apos;prakhar1989&apos;, 487],
- [u&apos;johnpapa&apos;, 480],
- [u&apos;philipwalton&apos;, 395],
- [u&apos;kripken&apos;, 370],
- [u&apos;addyosmani&apos;, 369],
- [u&apos;mdo&apos;, 368],
- [u&apos;chjj&apos;, 365],
- [u&apos;SamyPesse&apos;, 357],
- [u&apos;aFarkas&apos;, 345],
- [u&apos;afollestad&apos;, 336],
- [u&apos;gorhill&apos;, 329],
- [u&apos;KrauseFx&apos;, 309],
- [u&apos;fzaninotto&apos;, 290],
- [u&apos;jessesquires&apos;, 276],
- [u&apos;tomchristie&apos;, 270],
- [u&apos;pedrovgs&apos;, 266],
- [u&apos;andreamazz&apos;, 265],
- [u&apos;mikepenz&apos;, 232],
- [u&apos;mgcrea&apos;, 220],
- [u&apos;ChenYilong&apos;, 219],
- [u&apos;tbranyen&apos;, 219],
- [u&apos;mrmrs&apos;, 218],
- [u&apos;mgechev&apos;, 203],
- [u&apos;jordansissel&apos;, 203],
- [u&apos;Shougo&apos;, 196],
- [u&apos;fatih&apos;, 192],
- [u&apos;lihaoyi&apos;, 187],
- [u&apos;hueniverse&apos;, 164],
- [u&apos;desandro&apos;, 149],
- [u&apos;maxogden&apos;, 148],
- [u&apos;wbond&apos;, 148],
- [u&apos;sebastianbergmann&apos;, 147],
- [u&apos;jgm&apos;, 145],
- [u&apos;nzakas&apos;, 145],
- [u&apos;ai&apos;, 136],
- [u&apos;rxin&apos;, 134],
- [u&apos;junegunn&apos;, 132],
- [u&apos;weavejester&apos;, 131],
- [u&apos;jspahrsummers&apos;, 128],
- [u&apos;mitchellh&apos;, 127],
- [u&apos;Unknwon&apos;, 126],
- [u&apos;jezdez&apos;, 126],
- [u&apos;laruence&apos;, 123],
- [u&apos;swankjesse&apos;, 122],
- [u&apos;apotonick&apos;, 120],
- [u&apos;josevalim&apos;, 107],
- [u&apos;DataTables&apos;, 105],
- [u&apos;armon&apos;, 102],
- [u&apos;mourner&apos;, 100],
- [u&apos;bboyfeiyu&apos;, 100],
- [u&apos;RubyLouvre&apos;, 98],
- [u&apos;josh&apos;, 92],
- [u&apos;phodal&apos;, 89],
- [u&apos;bergie&apos;, 89],
- [u&apos;ebidel&apos;, 83],
- [u&apos;kelseyhightower&apos;, 82],
- [u&apos;pydanny&apos;, 81],
- [u&apos;technoweenie&apos;, 79],
- [u&apos;gitster&apos;, 78],
- [u&apos;muan&apos;, 77],
- [u&apos;michael&apos;, 75],
- [u&apos;lepture&apos;, 69],
- [u&apos;willdurand&apos;, 68],
- [u&apos;marijnh&apos;, 68],
- [u&apos;munificent&apos;, 68],
- [u&apos;evancz&apos;, 67],
- [u&apos;HugoGiraudel&apos;, 67],
- [u&apos;kartik-v&apos;, 66],
- [u&apos;bbatsov&apos;, 66],
- [u&apos;luin&apos;, 64],
- [u&apos;ashfurrow&apos;, 62],
- [u&apos;GrahamCampbell&apos;, 60],
- [u&apos;jfrazelle&apos;, 59],
- [u&apos;zcbenz&apos;, 58],
- [u&apos;svenfuchs&apos;, 58],
- [u&apos;bdarnell&apos;, 58],
- [u&apos;dcramer&apos;, 57],
- [u&apos;kriskowal&apos;, 57],
- [u&apos;yihui&apos;, 54],
- [u&apos;passy&apos;, 50],
- [u&apos;feross&apos;, 49],
- [u&apos;chneukirchen&apos;, 48],
- [u&apos;bradfitz&apos;, 48],
- [u&apos;mnot&apos;, 48],
- [u&apos;justintadlock&apos;, 48],
- [u&apos;JedWatson&apos;, 46],
- [u&apos;imathis&apos;, 46],
- [u&apos;hadley&apos;, 44],
- [u&apos;fabpot&apos;, 43],
- [u&apos;clowwindy&apos;, 43],
- [u&apos;rdegges&apos;, 43],
- [u&apos;staltz&apos;, 43],
- [u&apos;CharlinFeng&apos;, 43],
- [u&apos;orta&apos;, 42],
- [u&apos;yyx990803&apos;, 40],
- [u&apos;michaelliao&apos;, 39],
- [u&apos;rstacruz&apos;, 36],
- [u&apos;indutny&apos;, 36],
- [u&apos;tmcw&apos;, 35],
- [u&apos;mafintosh&apos;, 33],
- [u&apos;jedisct1&apos;, 33],
- [u&apos;domenic&apos;, 33],
- [u&apos;ibdknox&apos;, 33],
- [u&apos;rvagg&apos;, 32],
- [u&apos;rsc&apos;, 32],
- [u&apos;markstory&apos;, 29],
- [u&apos;maryrosecook&apos;, 29],
- [u&apos;rkh&apos;, 28],
- [u&apos;soumith&apos;, 28],
- [u&apos;ahmetalpbalkan&apos;, 28],
- [u&apos;shiffman&apos;, 27],
- [u&apos;ericholscher&apos;, 26],
- [u&apos;TooTallNate&apos;, 26],
- [u&apos;matyhtf&apos;, 26],
- [u&apos;darwin&apos;, 25],
- [u&apos;matthewmueller&apos;, 25],
- [u&apos;substack&apos;, 23],
- [u&apos;r7kamura&apos;, 22],
- [u&apos;bevacqua&apos;, 21],
- [u&apos;webmozart&apos;, 21],
- [u&apos;remy&apos;, 21],
- [u&apos;HenrikJoreteg&apos;, 21],
- [u&apos;chrisdone&apos;, 20],
- [u&apos;tommy351&apos;, 20],
- [u&apos;leafo&apos;, 19],
- [u&apos;SamSaffron&apos;, 19],
- [u&apos;karan&apos;, 19],
- [u&apos;caitp&apos;, 19],
- [u&apos;kylef&apos;, 18],
- [u&apos;kohsuke&apos;, 17],
- [u&apos;numbbbbb&apos;, 17],
- [u&apos;nex3&apos;, 17],
- [u&apos;isaacs&apos;, 17],
- [u&apos;robrix&apos;, 16],
- [u&apos;josegonzalez&apos;, 16],
- [u&apos;swannodette&apos;, 16],
- [u&apos;alloy&apos;, 16],
- [u&apos;mjackson&apos;, 16],
- [u&apos;gaearon&apos;, 15],
- [u&apos;audreyt&apos;, 15],
- [u&apos;robdodson&apos;, 15],
- [u&apos;c9s&apos;, 14],
- [u&apos;kevva&apos;, 14],
- [u&apos;jonathanong&apos;, 14],
- [u&apos;michaelklishin&apos;, 13],
- [u&apos;happypeter&apos;, 13],
- [u&apos;drnic&apos;, 13],
- [u&apos;contra&apos;, 13],
- [u&apos;ianb&apos;, 13],
- [u&apos;cvrebert&apos;, 12],
- [u&apos;ekmett&apos;, 12],
- [u&apos;sferik&apos;, 12],
- [u&apos;headius&apos;, 12],
- [u&apos;jdalton&apos;, 11],
- [u&apos;arturoc&apos;, 11],
- [u&apos;mcollina&apos;, 10],
- [u&apos;kytrinyx&apos;, 10],
- [u&apos;mattn&apos;, 10],
- [u&apos;davidfowl&apos;, 10],
- [u&apos;sole&apos;, 10],
- [u&apos;springmeyer&apos;, 9],
- [u&apos;creationix&apos;, 9],
- [u&apos;ayende&apos;, 9],
- [u&apos;balupton&apos;, 9],
- [u&apos;EisenbergEffect&apos;, 8],
- [u&apos;schacon&apos;, 8],
- [u&apos;appleboy&apos;, 8],
- [u&apos;odersky&apos;, 8],
- [u&apos;brianchandotcom&apos;, 7],
- [u&apos;ornicar&apos;, 7],
- [u&apos;madskristensen&apos;, 7],
- [u&apos;zilongshanren&apos;, 7],
- [u&apos;simurai&apos;, 7],
- [u&apos;Raynos&apos;, 6],
- [u&apos;ddollar&apos;, 6],
- [u&apos;pippinsplugins&apos;, 6],
- [u&apos;matthewmccullough&apos;, 6],
- [u&apos;tenderlove&apos;, 6],
- [u&apos;tokuhirom&apos;, 6],
- [u&apos;amueller&apos;, 6],
- [u&apos;olivergierke&apos;, 6],
- [u&apos;akrabat&apos;, 6],
- [u&apos;kevinsawicki&apos;, 5],
- [u&apos;3rd-Eden&apos;, 5],
- [u&apos;kazuho&apos;, 5],
- [u&apos;leebyron&apos;, 5],
- [u&apos;mikolalysenko&apos;, 5],
- [u&apos;kana&apos;, 5],
- [u&apos;graydon&apos;, 5],
- [u&apos;davecheney&apos;, 5],
- [u&apos;jlord&apos;, 5],
- [u&apos;aslakhellesoy&apos;, 5],
- [u&apos;jakevdp&apos;, 5],
- [u&apos;hughsk&apos;, 5],
- [u&apos;soyjavi&apos;, 5],
- [u&apos;Ocramius&apos;, 4],
- [u&apos;taylorotwell&apos;, 4],
- [u&apos;michalbe&apos;, 4],
- [u&apos;dominictarr&apos;, 4],
- [u&apos;PaulKinlan&apos;, 4],
- [u&apos;mathiasbynens&apos;, 4],
- [u&apos;shama&apos;, 4],
- [u&apos;aaronpk&apos;, 4],
- [u&apos;steveklabnik&apos;, 3],
- [u&apos;benbalter&apos;, 3],
- [u&apos;frsyuki&apos;, 3],
- [u&apos;alex&apos;, 3],
- [u&apos;purcell&apos;, 3],
- [u&apos;parkr&apos;, 3],
- [u&apos;arunoda&apos;, 3],
- [u&apos;tqchen&apos;, 3],
- [u&apos;paulcbetts&apos;, 3],
- [u&apos;indirect&apos;, 3],
- [u&apos;stephenplusplus&apos;, 3],
- [u&apos;andrew&apos;, 3],
- [u&apos;Seldaek&apos;, 3],
- [u&apos;mattdesl&apos;, 2],
- [u&apos;derickr&apos;, 2],
- [u&apos;samdark&apos;, 2],
- [u&apos;STRd6&apos;, 2],
- [u&apos;sahat&apos;, 2],
- [u&apos;arun-gupta&apos;, 2],
- [u&apos;alanhamlett&apos;, 2],
- [u&apos;timoxley&apos;, 2],
- [u&apos;sorah&apos;, 2],
- [u&apos;barryvdh&apos;, 2],
- [u&apos;sebmck&apos;, 1],
- [u&apos;mikermcneil&apos;, 1],
- [u&apos;yiminghe&apos;, 1],
- [u&apos;nathansobo&apos;, 1],
- [u&apos;vladikoff&apos;, 1],
- [u&apos;zpao&apos;, 1],
- [u&apos;soimort&apos;, 1],
- [u&apos;stefanpenner&apos;, 0],
- [u&apos;jamesward&apos;, 0],
- [u&apos;weaverryan&apos;, 0],
- [u&apos;fsouza&apos;, 0],
- [u&apos;rafaelfranca&apos;, 0],
- [u&apos;gdi2290&apos;, 0],
- [u&apos;rwaldron&apos;, 0],
- [u&apos;stof&apos;, 0],
- [u&apos;fengmk2&apos;, 0],
- [u&apos;STRML&apos;, 0],
- [u&apos;freddix&apos;, 0],
- [u&apos;sokra&apos;, 0],
- [u&apos;jiyinyiyong&apos;, 0],
- [u&apos;spicyj&apos;, 0]]
-</pre>
+<div class="output_html rendered_html output_subarea output_pyout">
+<div style="max-width:1500px;overflow:auto;">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>nickname</th>
+      <th>score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>torvalds</td>
+      <td>13839.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>mbostock</td>
+      <td>1457.566667</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>mrdoob</td>
+      <td>1021.296296</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Trinea</td>
+      <td>855.388889</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>antirez</td>
+      <td>797.833333</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>mitsuhiko</td>
+      <td>691.466667</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>JakeWharton</td>
+      <td>660.133333</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>photonstorm</td>
+      <td>629.894737</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>zenorocha</td>
+      <td>593.100000</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>prakhar1989</td>
+      <td>487.666667</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>johnpapa</td>
+      <td>480.300000</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>philipwalton</td>
+      <td>395.166667</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>kripken</td>
+      <td>370.566667</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>addyosmani</td>
+      <td>369.500000</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>mdo</td>
+      <td>369.000000</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>chjj</td>
+      <td>365.566667</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>SamyPesse</td>
+      <td>357.533333</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>aFarkas</td>
+      <td>345.166667</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>afollestad</td>
+      <td>342.117647</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>gorhill</td>
+      <td>329.263158</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>KrauseFx</td>
+      <td>309.307692</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>fzaninotto</td>
+      <td>290.400000</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>jessesquires</td>
+      <td>277.200000</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>tomchristie</td>
+      <td>270.200000</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>pedrovgs</td>
+      <td>267.448276</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>andreamazz</td>
+      <td>265.666667</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>mikepenz</td>
+      <td>233.033333</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>ChenYilong</td>
+      <td>222.037037</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>mgcrea</td>
+      <td>220.300000</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>tbranyen</td>
+      <td>219.133333</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>226</th>
+      <td>STRd6</td>
+      <td>2.666667</td>
+    </tr>
+    <tr>
+      <th>227</th>
+      <td>mattdesl</td>
+      <td>2.600000</td>
+    </tr>
+    <tr>
+      <th>228</th>
+      <td>derickr</td>
+      <td>2.466667</td>
+    </tr>
+    <tr>
+      <th>229</th>
+      <td>sorah</td>
+      <td>2.466667</td>
+    </tr>
+    <tr>
+      <th>230</th>
+      <td>arun-gupta</td>
+      <td>2.266667</td>
+    </tr>
+    <tr>
+      <th>231</th>
+      <td>barryvdh</td>
+      <td>2.200000</td>
+    </tr>
+    <tr>
+      <th>232</th>
+      <td>samdark</td>
+      <td>2.166667</td>
+    </tr>
+    <tr>
+      <th>233</th>
+      <td>sahat</td>
+      <td>2.066667</td>
+    </tr>
+    <tr>
+      <th>234</th>
+      <td>timoxley</td>
+      <td>2.066667</td>
+    </tr>
+    <tr>
+      <th>235</th>
+      <td>yiminghe</td>
+      <td>1.766667</td>
+    </tr>
+    <tr>
+      <th>236</th>
+      <td>vladikoff</td>
+      <td>1.766667</td>
+    </tr>
+    <tr>
+      <th>237</th>
+      <td>sebmck</td>
+      <td>1.700000</td>
+    </tr>
+    <tr>
+      <th>238</th>
+      <td>nathansobo</td>
+      <td>1.666667</td>
+    </tr>
+    <tr>
+      <th>239</th>
+      <td>mikermcneil</td>
+      <td>1.600000</td>
+    </tr>
+    <tr>
+      <th>240</th>
+      <td>soimort</td>
+      <td>1.433333</td>
+    </tr>
+    <tr>
+      <th>241</th>
+      <td>zpao</td>
+      <td>1.233333</td>
+    </tr>
+    <tr>
+      <th>242</th>
+      <td>rafaelfranca</td>
+      <td>0.900000</td>
+    </tr>
+    <tr>
+      <th>243</th>
+      <td>weaverryan</td>
+      <td>0.866667</td>
+    </tr>
+    <tr>
+      <th>244</th>
+      <td>fsouza</td>
+      <td>0.866667</td>
+    </tr>
+    <tr>
+      <th>245</th>
+      <td>gdi2290</td>
+      <td>0.800000</td>
+    </tr>
+    <tr>
+      <th>246</th>
+      <td>spicyj</td>
+      <td>0.800000</td>
+    </tr>
+    <tr>
+      <th>247</th>
+      <td>rwaldron</td>
+      <td>0.766667</td>
+    </tr>
+    <tr>
+      <th>248</th>
+      <td>STRML</td>
+      <td>0.766667</td>
+    </tr>
+    <tr>
+      <th>249</th>
+      <td>jamesward</td>
+      <td>0.733333</td>
+    </tr>
+    <tr>
+      <th>250</th>
+      <td>sokra</td>
+      <td>0.633333</td>
+    </tr>
+    <tr>
+      <th>251</th>
+      <td>stefanpenner</td>
+      <td>0.600000</td>
+    </tr>
+    <tr>
+      <th>252</th>
+      <td>stof</td>
+      <td>0.566667</td>
+    </tr>
+    <tr>
+      <th>253</th>
+      <td>jiyinyiyong</td>
+      <td>0.400000</td>
+    </tr>
+    <tr>
+      <th>254</th>
+      <td>fengmk2</td>
+      <td>0.333333</td>
+    </tr>
+    <tr>
+      <th>255</th>
+      <td>freddix</td>
+      <td>0.100000</td>
+    </tr>
+  </tbody>
+</table>
+<p>256 rows × 2 columns</p>
+</div>
 </div>
 
 </div>
