@@ -8,6 +8,7 @@ soup = BeautifulSoup(page.text)
 
 prdtBloc = soup.find_all("div", class_='prdtBloc')
 
+
 prdtDATA = {}
 for prdt in prdtBloc:
     prdt = {}
