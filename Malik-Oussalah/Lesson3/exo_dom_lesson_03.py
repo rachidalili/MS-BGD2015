@@ -80,7 +80,7 @@ def GetJson (user):
 master = Tk()
 
 def makeentry(parent, caption, width=None, **options):
-    """create an entry login/password""""
+    """create an entry login/password"""
     Label(parent, text=caption).pack(side=LEFT)
     entry = Entry(parent, **options)
     if width:
