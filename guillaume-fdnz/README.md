@@ -14,3 +14,7 @@ Lesson1
 
 Lesson2
 - exo_dom_lesson_02.py: Crawler Comptes des communes
+- exo_cc_lesson_02.py 
+
+Lesson3
+- exo_dom_lesson_02.py: Affiche le classement des top contributeurs de github en fonction de la moyenne des stars de leurs repos. (Crawling, API)

@@ -7,10 +7,10 @@ import urllib2
 import pandas as pd
 import operator
 
-
 URL = 'https://gist.github.com/paulmillr/2657075'
-GIT_LOGIN ############ Complete
-GIT_PWD ############ Complete
+# GIT_LOGIN ############ Complete
+# GIT_PWD ############ Complete
+# GIT_TOKEN 
 
 def getSoupFromUrl(url):
 	request = requests.get(url)
@@ -34,9 +34,17 @@ def getUsers(url):
 			usersList.append(name)
 	return usersList
 
+# Authentification github par id/mdp
 def requestGithubAPI(user):
 	request = requests.get('https://api.github.com/users/' + user + '/repos', auth=(GIT_LOGIN, GIT_PWD))
 	return request
+
+# Authentification gitHub par Token
+def authGihubAPI(user):
+	url = 'https://api.github.com/users/' + user + '/repos'
+	headers = {'Authorization': 'token %s' % GIT_TOKEN}
+	r = requests.get(url, headers=headers)
+	return r
 
 def getMean(jsonText):
 	sum = 0
@@ -49,7 +57,8 @@ def main():
 	users = getUsers(URL)
 	usersDict = {}
 	for name in users:
-		r = requestGithubAPI(name)
+		# r = requestGithubAPI(name)
+		r = authGihubAPI(name)
 		jsonText = json.loads(r.text)
 		mean = getMean(jsonText)
 
