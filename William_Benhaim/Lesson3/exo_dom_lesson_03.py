@@ -6,6 +6,14 @@ import urllib2
 import re
 from getpass import getpass
 
+token='346cec39d6709191db203e4a85864b469fe497f7'
+rqHeader = {"Authorization": "token "+my_token}
+#
+# Connect to github api using token
+#
+def connectWithToken():
+    request = requests.get(github_api_url+"/user", headers=rqHeader)
+    return request.status_code
 
 def GetSoupFromUrl(url):
     request = requests.get(url)
