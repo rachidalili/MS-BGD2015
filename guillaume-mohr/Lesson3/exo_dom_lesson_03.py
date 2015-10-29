@@ -20,6 +20,47 @@ import pandas as pd
 from sys import version_info
 
 
+class IncorrectGitHubAuth(Exception):
+    pass
+
+
+def getAuthFromFile(f_name='secret'):
+    """
+    Get (user, password) from a file
+    The file should contains the username on the first line and 
+    the password on the second line. Default file name is 'secret'.
+    """
+    try:
+        with open(f_name) as f:
+            lines = f.readlines()
+        username, password, *_ = lines
+        return (username.strip(), password.strip())
+    except:
+        return (None, None)
+
+
+def promptAuth():
+    """Get username and password from promt"""
+    # To get user input, we need to test Python version :(
+    if version_info[0] > 2:
+        username = input('GitHub username:')
+    else:
+        username = raw_input('GitHub username:')
+    password = getpass()
+    return (username, password)
+
+
+def checkAuth(username, password):
+    """
+    Check the validity of the usernme, password
+    Returns:
+    --------
+    True if valid, False otherwise
+    """
+    r = requests.get('https://api.github.com/user', auth=(username, password))
+    return r.status_code == 200
+
+
 def authentification():
     """
     Since this script requires more than 60 API request / hours,
@@ -28,16 +69,20 @@ def authentification():
     --------
     tuple (username, password)
     """
-    # To get user input, we need to test Python version :(
-    if version_info[0] > 2:
-        username = input('GitHub username:')
-    else:
-        username = raw_input('GitHub username:')
-    password = getpass()
-    r = requests.get('https://api.github.com/user', auth=(username, password))
-    if r.status_code != 200:
-        print('Incorrect username/password, please retry')
-        return authentification()
+    #First we check if we can find a username/password in a file
+    username, password = getAuthFromFile()
+    #If that does not work, prompt the user
+    if username is None or password is None or \
+       not checkAuth(username, password):
+        print('Authentification from file failed.')
+        for i in range(5):
+            print('Getting credential from the user, '
+                  '{} tries remaining...'.format(5 - i))
+            username, password = promptAuth()
+            if checkAuth(username, password):
+                break
+        else:
+            raise IncorrectGitHubAuth
     return (username, password)
 
 
@@ -73,7 +118,7 @@ def getUserAverageStars(user, auth):
     return mean(stars)
 
 
-def rankContributors(max_workers=50):
+def rankContributors(max_workers=51):
     """
     Rank the 256 most active GitHub users by the number of stars
     of the repositories they own.
