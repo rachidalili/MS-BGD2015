@@ -16,5 +16,5 @@ from Tkinter import *
 
 #Importation du csv#
 
-
+dataset = pd.read_csv("C:\Users\Kopipan\MS-BGD2015\Lessons-Exercices/villes.csv")
 #use google client#
