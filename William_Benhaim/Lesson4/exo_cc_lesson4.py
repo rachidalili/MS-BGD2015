@@ -24,9 +24,11 @@ mytoken = 'AIzaSyDWg78VWNp8ROgTUZDt8rKGVXMf9R98p5U'
 for villeA in villes[0:10]:
 	for villeB in villes[0:10]:
 		tt=1
-mapp = 'https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal&key='+mytoken
+mapp = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=Paris&destinations=Poitier&mode=bicycling&language=fr-FR&key=AIzaSyDWg78VWNp8ROgTUZDt8rKGVXMf9R98p5U'
+
+googleResponse = urllib.urlopen(mapp)
+jsonResponse = json.loads(googleResponse.read())
 #mapp = 'https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal&key=' + mytoken
 resp = requests.get(mapp)
-print resp.json()
 datta = json.loads(resp.text)
-
+datta= datta['rows']
