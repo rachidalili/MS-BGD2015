@@ -1,0 +1,155 @@
+# encoding: utf-8
+
+import requests, urllib2
+import re
+from bs4 import BeautifulSoup
+import pandas as pd
+from subprocess import call
+import random
+
+EXTRACT_PHONE_NUMBER = True
+
+urls = [
+    "http://www.leboncoin.fr/voitures/offres/ile_de_france/?f=a&th=1&fu=4&q=zoe&it=1",
+    "http://www.leboncoin.fr/voitures/offres/provence_alpes_cote_d_azur/?f=a&th=1&fu=4&q=zoe&it=1",
+    "http://www.leboncoin.fr/voitures/offres/aquitaine/?f=a&th=1&fu=4&q=zoe&it=1"
+]
+versions = ['intens', 'zen', 'life']
+annees = [2012, 2013, 2014]
+
+data_lbc = pd.DataFrame(columns=['Version', 'Année', 'Kilométrage', 'Prix', 'Téléphone', 'Pro'])
+data_argus = pd.DataFrame(columns=['Année', 'Version', 'Cote'])
+
+proxies = pd.read_csv('proxies.txt')
+
+def retrieve_phone_number(node):
+    # On lit le code JS executé au clic, et on extrait les paramètres
+    # de la seconde requête
+    params = re.findall(r'\(.*, (\d+), \"(.+)\"\)', node.find('a')['href'])
+    # Appel à l'API de LBC pour récupérer l'url du gif du numéro de téléphone
+    proxy = 'http://' + proxies.iloc[random.randrange(len(proxies))].values[0]
+    print u'   --> extraction du numéro (proxy): ' + proxy
+    r = requests.post(
+        'https://api.leboncoin.fr/api/utils/phonenumber.json',
+        {
+            'list_id': int(params[0][0]),
+            'app_id': 'leboncoin_web_utils',
+            'key': params[0][1]
+        },
+        headers={
+            'Host': 'api.leboncoin.fr',
+            'Origin': 'http://www.leboncoin.fr',
+            'Referer': node.url,
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36'
+        },
+        proxies={
+            'http': proxy
+        })
+    # Si le JSON contient un status OK alors on continue
+    # si le status est KO, on vient de se faire bloquer (ça va très vite, malgré le proxy aléatoire)
+    print u'   --> extraction du numéro (status): ' + r.json()['utils']['status']
+    if r.json()['utils']['status'] == 'OK':
+        # On télécharge le gif du numéro et on l'écrit en local
+        gif_url = r.json()['utils']['phonenumber']
+        f = open('temp.gif', 'wb')
+        f.write(requests.get(gif_url).content)
+        f.close()
+        # Conversion de temp.gif en temp.jpeg
+        # nécessite d'être sous OSX
+        call(["sips", "-s", "format", "jpeg", "temp.gif", "--out", "temp.jpeg"])
+        # OCR du numéro
+        # nécessite d'avoir tesseract et leptonica installés
+        call(["tesseract", "temp.jpeg", "temp", "-psm", "7", "nobatch", "digits"])
+        # On lit la sortie de l'OCR
+        numero = open('temp.txt').read()
+        if len(numero) > 0:
+            return numero
+        else:
+            return None
+    else:
+        return None
+
+
+for url in urls:
+    r = requests.get(url)
+    soup = BeautifulSoup(r.text, 'html.parser')
+    ads = soup.findAll('div', {'class': 'lbc'})
+    for ad in ads:
+        ad_url = ad.parent['href']
+        print 'Annonce: ' + ad_url
+        r = requests.get(ad_url)
+        soup = BeautifulSoup(r.text, 'html.parser')
+
+        # Extraction version
+        titre = soup.find('h1', {'itemprop': 'name'}).get_text().lower()
+        version = None
+        for v in versions:
+            if v in titre:
+                version = v
+                break
+
+        # Extraction année
+        annee = soup.find('td', {'itemprop': 'releaseDate'})
+        if annee is not None:
+            annee = int(re.sub(r'\D', '', annee.get_text()))
+        else:
+            annee = None
+
+        # Extraction kilométrage
+        kilometrage = None
+        for c in soup.find('div', {'class': 'lbcParams criterias'}).findAll('tr'):
+            if u'Kilométrage' in c.find('th').get_text():
+                kilometrage = int(re.sub(r'\D', '', c.find('td').get_text()))
+                break
+
+        # Extraction prix
+        prix = soup.find('span', {'class': 'price'})
+        if prix is not None:
+            prix = re.sub(r'\D', '', prix.get_text())
+        else:
+            prix = None
+
+        # Extraction pro
+        pro = soup.find('span', {'class': 'ad_pro'})
+        if pro is None:
+            pro = False
+        else:
+            pro = True
+
+        # Extraction téléphone
+        numero = soup.find('span', {'id': 'phoneNumber'})
+        if numero is not None and EXTRACT_PHONE_NUMBER:
+            numero = retrieve_phone_number(numero)
+        else:
+            numero = None
+
+        # Stockage
+        data_lbc = data_lbc.append({
+            'Version': version,
+            'Année': annee,
+            'Kilométrage': kilometrage,
+            'Prix': prix,
+            'Téléphone': numero,
+            'Pro': pro
+        }, ignore_index=True)
+
+url_argus = "http://www.lacentrale.fr/cote-auto-renault-zoe-{version}+charge+rapide-{annee}.html"
+
+for annee in annees:
+    for version in versions:
+        url = url_argus.replace('{version}', version)
+        url = url.replace('{annee}', str(annee))
+        print 'Cote: ' + url
+        r = requests.get(url)
+        soup = BeautifulSoup(r.text, 'html.parser')
+        cote = int(re.sub(r'\D', '', soup.find('span', {'class': 'Result_Cote'}).get_text()))
+        data_argus = data_argus.append({
+            'Version': version,
+            'Année': annee,
+            'Cote': cote
+        }, ignore_index=True)
+
+# Inner join sur Version et Année
+data_merged = pd.merge(data_lbc, data_argus, on=['Version', 'Année'], how='inner')
+
+print data_merged
