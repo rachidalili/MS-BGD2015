@@ -93,6 +93,72 @@ def get_data_from_page(link='http://www.leboncoin.fr/voitures/872265494.htm?ca=1
             get_phone_number(link))
 
 
+def getads(search="renault zoe"):
+    idf = 'http://www.leboncoin.fr/voitures/offres/ile_de_france/?q='+ search.replace(' ','+')
+    paca = 'http://www.leboncoin.fr/voitures/offres/provence_alpes_cote_d_azur/?q='+ search.replace(' ','+')
+    aquitaine = 'http://www.leboncoin.fr/voitures/offres/aquitaine/?q='+ search.replace(' ','+')
+    
+    regions = [idf,paca,aquitaine]
+    ads = []
+    for region in regions:
+        offers = loadpage(region).find_all("div",{'class':'list-lbc'})[0]
+        ads_for_region = offers.find_all('a')
+        for ad in ads_for_region:
+            ads.append(ad['href'])
+    
+    return ads
+
+matrix = []
+all_ads = getads()
+for ad in all_ads:
+    matrix.append(get_data_from_page(ad))
+print matrix
+
+
+
+#creation tableau
+
+columns = ['Version', 'Year', 'Km', 'Price', 'Posted by', 'Phone']
+datacars = pd.DataFrame(matrix, columns = columns)
+
+def get_argus_from_car(car):
+    version = car[['Version']].item()
+    year = car[['Year']].item()
+
+    if version != '':
+        argus_page = 'http://www.lacentrale.fr/cote-auto-renault-zoe-'+version+'+charge+rapide-'+year+'.html'
+        res = loadpage(argus_page)
+        argus_with_currency = res.find_all('span', {'class':'Result_Cote arial tx20'})[0].text.replace(' ', '')
+        matches = re.match('([0-9]*)', argus_with_currency)
+        argus = matches.group(1)
+        return argus
+    else:
+        return "0"
+
+argus_list = []
+for i in range(0,datacars.shape[0]):
+    argus_list.append(get_argus_from_car(datacars.irow(i)))
+
+argus_list_ = pd.DataFrame(argus_list, columns=['Argus'])
+
+datacars_with_argus = pd.concat([datacars, argus_list_], axis=1)
+datacars_with_argus['Phone'][0] = datacars_with_argus['Phone'][0].replace('.','').replace('R','')
+
+datacars_with_argus[['Year', 'Km', 'Price', 'Argus']] = datacars_with_argus[['Year', 'Km', 'Price', 'Argus']].astype(int)
+datacars_with_argus.dtypes
+
+def compare(price,argus):
+    if price.item() <= argus.item():
+        return "cheap"
+    else:
+        return "expensive"
+
+aa = datacars_with_argus.apply(lambda row: compare(row[['Price']], row[['Argus']]), axis=1)
+datacars_with_argus['Evaluation'] = datacars_with_argus.apply(lambda row: compare(row[['Price']], row[['Argus']]), axis=1)
+
+datacars_with_argus.to_csv("cars.csv", sep=';')
+
+    
 
 
 
