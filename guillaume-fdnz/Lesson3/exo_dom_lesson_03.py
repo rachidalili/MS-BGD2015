@@ -50,6 +50,10 @@ def displayBeautifulData(mostStargazedContributors):
 
 url = "https://gist.github.com/paulmillr/2657075"
 mostActiveContributors = getMostActiveContributors(url)
+
+
+# préferer la méthode post, car le password passé par la méthode get est stockée dans les logs.
+#authentification à ajouter
 mostStargazedContributors = getContributorsStarsRanking(mostActiveContributors)
 
 displayBeautifulData(mostStargazedContributors)
