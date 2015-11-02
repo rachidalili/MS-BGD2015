@@ -12,7 +12,7 @@ def crawling():
 
     f = open('login_list.csv', 'w')
 
-    for row in soup.findAll('table')[0].tbody.findAll('tr'):
+    for row in soup.findAll('table')[0].tbody.findAll('tr > td'):
         f.write(row.findAll('a')[0].contents[0] + "\n")
 
     f.close()
