@@ -44,6 +44,11 @@ def getAnnee(soup):
 def getKM(soup):
 	return re.sub(r'[ KM]','', soup.find('div', {'class':'lbcParams criterias'}).select("tr:nth-of-type(3) > td")[0].text)
 
+def getTelephone(soup):
+	textContent = unicode(soup.find('div', {'class': 'content'}))		
+	rexp = re.compile('((?:[0-9]{2}[ .-]*){5})')
+	return re.sub(r'[ .-]', '', rexp.search(textContent).groups()[0]) if rexp.search(textContent) is not None else ''
+
 def getInformation(links):
 	for link in links:
 		soup = getSoupFromUrl(link)
@@ -54,6 +59,7 @@ def getInformation(links):
 		list_prix.append(int(getPrice(soup)))
 		list_KM.append(getKM(soup))
 		list_model.append(getModel(soup))
+		list_telephone.append(getTelephone(soup))
 
 def getPriceArgus(model, year):
 	url = 'http://www.lacentrale.fr/cote-auto-renault-zoe-' + model + '+charge+rapide-' + year + '.html'
@@ -68,6 +74,7 @@ def informationToDF():
         'Annee':list_annee,
         'Version':list_version,
         'Pro ou Parti': list_pro,
+        'Telephone': list_telephone,
         'KM':list_KM,
         'Prix': list_prix,
         'Model': list_model
@@ -90,6 +97,7 @@ price_model_year = {}
 list_model = []
 list_annee = []
 list_KM = []
+list_telephone = []
 regions = ['ile_de_france', 'provence_alpes_cote_d_azur', 'aquitaine']
 versions = ['intens', 'life', 'zen']
 years = ['2012','2013','2014']
