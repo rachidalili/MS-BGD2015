@@ -67,11 +67,12 @@ def retrieve_phone_number_ocr(soup):
 
 def retrieve_phone_number_desc(soup):
     desc = soup.find('div', {'itemprop': 'description'})
-    phone_numbers = re.findall(r'(\d{2}[\s\.-]*\d{2}[\s\.-]*\d{2}[\s\.-]*\d{2}[\s\.-]*\d{2}[\s\.-]*)', desc.get_text())
+    phone_numbers = re.findall(r'((?:\d[\s\.-]?){10})', desc.get_text())
     if len(phone_numbers) > 0:
         return re.sub(r'\D', '', phone_numbers[0])
     else:
         return None
+
 
 def retrieve_version(soup):
     titre = soup.find('h1', {'itemprop': 'name'}).get_text().lower()
@@ -99,6 +100,7 @@ def retrieve_kilometers(soup):
             break
     return kilometrage
 
+
 def retrieve_price(soup):
     prix = soup.find('span', {'class': 'price'})
     if prix is not None:
@@ -106,10 +108,10 @@ def retrieve_price(soup):
     else:
         return None
 
+
 def retrieve_pro(soup):
     pro = soup.find('span', {'class': 'ad_pro'})
-    return not pro is None
-
+    return pro is not None
 
 
 
