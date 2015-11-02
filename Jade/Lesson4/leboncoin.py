@@ -2,12 +2,12 @@
 """
 Created on Mon Nov  2 23:31:48 2015
 
-@author: tlc
+@author: Jade
 """
 
 #import urllib2
 from bs4 import BeautifulSoup
-import requests 
+import requests
 import re
 
 
@@ -25,22 +25,21 @@ def getSoupFromUrl(url):
   #parse the restult of the request
   soup = BeautifulSoup(request.text, 'html.parser')
   return soup
-  
+
 #soup = BeautifulSoup(html, 'html.parser')
 soup = getSoupFromUrl(url)
-print(soup) 
+print(soup)
 tab_link =[]
 for link in soup.find_all('a'):
-    lien=link.get('href')    
+    lien=link.get('href')
     title1=link.get('title')
     if title1 != None:
         m=re.findall('zoe',title1)
         if m != None:
             print (title1)
             tab_link.append(lien)
-            
+
 # pour chaque offre
 for i in tab_link:
     print (i)
     soupi=getSoupFromUrl(i)
-    
