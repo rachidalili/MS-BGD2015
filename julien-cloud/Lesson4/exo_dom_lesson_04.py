@@ -124,7 +124,7 @@ versions = ['intens', 'zen', 'life']
 annees = [2012, 2013, 2014]
 
 data_lbc = pd.DataFrame(columns=['Version', 'Année', 'Kilométrage', 'Prix', 'Téléphone', 'Pro'])
-data_argus = pd.DataFrame(columns=['Année', 'Version', 'Cote'])
+data_cote = pd.DataFrame(columns=['Année', 'Version', 'Cote'])
 
 proxies = pd.read_csv('_reliable_list.txt')
 
@@ -148,24 +148,24 @@ for url in urls_lbc:
         }, ignore_index=True)
 
 
-url_argus = "http://www.lacentrale.fr/cote-auto-renault-zoe-{version}+charge+rapide-{annee}.html"
+url_cote = "http://www.lacentrale.fr/cote-auto-renault-zoe-{version}+charge+rapide-{annee}.html"
 
 for annee in annees:
     for version in versions:
-        url = url_argus.replace('{version}', version)
+        url = url_cote.replace('{version}', version)
         url = url.replace('{annee}', str(annee))
         print 'Cote: ' + url
         r = requests.get(url)
         soup = BeautifulSoup(r.text, 'html.parser')
         cote = float(re.sub(r'\D', '', soup.find('span', {'class': 'Result_Cote'}).get_text()))
-        data_argus = data_argus.append({
+        data_cote = data_cote.append({
             'Version': version,
             'Année': annee,
             'Cote': cote
         }, ignore_index=True)
 
 # Inner join sur Version et Année
-data_merged = pd.merge(data_lbc, data_argus, on=['Version', 'Année'], how='inner')
+data_merged = pd.merge(data_lbc, data_cote, on=['Version', 'Année'], how='inner')
 data_merged['Delta'] = (data_merged['Prix'] - data_merged['Cote']) / data_merged['Cote'] * 100.
 data_merged = data_merged.sort(columns=['Delta'])
 data_merged = data_merged.reset_index()
