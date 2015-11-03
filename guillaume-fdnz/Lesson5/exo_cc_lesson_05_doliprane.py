@@ -1,20 +1,12 @@
 # coding: utf8
-
+"""
+Ce script va récupérer des informations sur le doliprane sur une base de données publique de médicaments
+"""
 import pandas as pd
 import json
 import re
 import requests
 from bs4 import BeautifulSoup
-
-import requests
-import json
-
-def getSoupFromUrl(url):
-  #Execute q request toward url
-  request = requests.get(url)
-  #parse the restult of the request
-  soup = BeautifulSoup(request.text, 'html.parser')
-  return soup
 
 """
 Effectue une requête sur une base de données publique de médicaments
@@ -45,12 +37,7 @@ def getSoupOfDrugRequest(drug, page):
     'radLibelleSub':4
     }
     response = requests.post(url, data) #A verifier que les headers fonctionnent
-    return BeautifulSoup(r.text,'html.parser')
-
-
-soup2 = getSoupOfDrugRequest("doliprane", 2)
-liens2 = getLiensFromSoup(soup2)
-len(liens2)
+    return BeautifulSoup(response.text,'html.parser')
 
 """
 Renvoie les liens correspondant potentiellement aux médicaments (les liens vers les autres pages sont également présents)
@@ -67,21 +54,20 @@ soup = getSoupOfDrugRequest("doliprane", 1)
 pageCountRaw = soup.findAll('div',{'class':'navBarGauche'})[0].text
 pageCount    = re.compile(r'(\d+)$').search(pageCountRaw).group()
 
-#liens = soup.findAll(attrs={'class':'standart'})
-
 #On récupère à partir de toutes pages, tous les liens correspondant potentiellement à des médicaments
 links = list()
 [links.extend(getLiensFromSoup(soup)) for soup in [getSoupOfDrugRequest("doliprane", page) for page in xrange(1,int(pageCount)+1)]]
 
 #On récupère uniquement les liens correspondant à des médicaments et on stocke dans un dataframe le contenu brut
 drugsRawData =  pd.DataFrame([link.text for link in links if link['href'].startswith('extrait.php?specid')], columns=[u"rawData"])
-#drugsData = drugsRawData["rawData"].str.findall(r"^([A-Z\s]+)(.*),(.+)$")
+
 #On extrait 3 colonnes des données (Médicament/Poids/Forme Gallénique)
-drugsData = pd.DataFrame(drugsRawData["rawData"].str.findall(r"^([A-Z\s]+)(.*),(.+)$"), columns=[u'Drug name',u'Weight',u'Dosage form'])
+drugsDataInTreatement = pd.DataFrame(drugsRawData["rawData"].str.findall(r"^([A-Z\s]+)(.*),(.+)[\t+]$").tolist())
+drugsData = pd.DataFrame(drugsDataInTreatement[0].tolist(), columns=[u'Drug name',u'Weight',u'Dosage form'])
 
 #To Do:
-#Trouver un moyen de permettre requêter sur plusieurs pages.
-#links contient trop de resultats. revoir la boucle
+#Trouver un moyen élégant de supprimer les \t
+#re.sub('\t','',drugsRawData["rawData"][0]) ?
 
 
 #Historique:
