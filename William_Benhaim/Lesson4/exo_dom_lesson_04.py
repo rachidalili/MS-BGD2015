@@ -69,6 +69,7 @@ def GetInformation(url_zoe,str_name_region):
 	isphone= re.search(expression,str(des))
 	if isphone:
 		phone=isphone.group()
+		phone = re.sub(r'\D', "", phone)  
 	else:
 		phone='NA'
 	return str_name_region,version,annee,typevendeur,phone,km,prix,cote,CompareCoteToprice
@@ -101,5 +102,5 @@ listALL=LeBonCoinZoe(listregion)
 
 Result_DF = pd.DataFrame(listALL, columns=listInfo)
 print Result_DF
-
+Result_DF[]
 
