@@ -77,4 +77,4 @@ urlsAParcourir = [
 renaultTrouveesPartout = list()
 [renaultTrouveesPartout.extend(getVoitures(url)) for url in urlsAParcourir]
 
-df = pandas.DataFrame(data, columns=['Url', 'Prix', 'Pro', 'Téléphone', 'Kilométrage','Année'])
+df = pandas.DataFrame(renaultTrouveesPartout, columns=['Url', 'Prix', 'Pro', 'Téléphone', 'Kilométrage','Année'])
