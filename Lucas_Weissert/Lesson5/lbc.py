@@ -119,5 +119,7 @@ for url in list_url_region:
 price_argus = [getPriceArgus(m,y) for y in years for m in versions]
 DF = informationToDF()
 print DF
+# Filtrage dataframe
+# DF[DF['betterThanArgus']='high']
 
 
