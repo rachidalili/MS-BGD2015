@@ -28,10 +28,12 @@ def scrap_annouce(url):
     # tel = str(br.nextSibling).strip()
 
     text = soup.find('div', itemprop='description').get_text()
-    regex = "(0[1-9][0-9]{8}|0[1-9](\s[0-9]{2}){4}|0[1-9](.[0-9]{2}){4})"
+    #regex = "(0[1-9][0-9]{8}|0[1-9]([ .-/][0-9]{2}){4}|0[1-9](.[0-9]{2}){4})"
+    regex = "(0[1-9]([ .-/]?[0-9]{2}){4})"
 
     try:
         tel = max(re.findall(regex, text)[0]).replace(" ", "").replace(".", "")
+        print(re.findall(regex, text))
     except IndexError:
         tel = '...'
 
