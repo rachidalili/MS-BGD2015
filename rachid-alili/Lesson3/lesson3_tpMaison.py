@@ -10,8 +10,7 @@ import pandas as pd
 from getpass import getpass
 
 
-# pour afficher de jolis tableaux
-import tabulate
+
 
 
 ########################################################
