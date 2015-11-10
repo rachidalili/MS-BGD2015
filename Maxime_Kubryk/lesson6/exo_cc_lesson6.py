@@ -29,3 +29,7 @@ for country, group in groups_country:
     # corr = group[['Clics', 'likes', 'shares', 'comments', 'revenue']].corr()
     # print(name)
     # print(corr)
+
+df = pd.read_excel("../../Lessons-Exercices/exo.xls", skiprows=11, sheetname=0)
+df[['country','target']] = df['campaign'].str.split('_').str[1:3]
+res = df.groupby(['country','target'])[['impressions','revenue']].mean()
