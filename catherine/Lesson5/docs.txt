@@ -1,0 +1,5 @@
+HDFStore
+http://glowingpython.blogspot.fr/2014/08/quick-hdf5-with-pandas.html
+
+Import into sqlite
+https://plot.ly/ipython-notebooks/big-data-analytics-with-pandas-and-sqlite/

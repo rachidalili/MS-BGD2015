@@ -113,23 +113,18 @@ def retrieve_pro(soup):
     pro = soup.find('span', {'class': 'ad_pro'})
     return pro is not None
 
-
-
-urls_lbc = [
-    "http://www.leboncoin.fr/voitures/offres/ile_de_france/?f=a&th=1&fu=4&q=zoe&it=1",
-    "http://www.leboncoin.fr/voitures/offres/provence_alpes_cote_d_azur/?f=a&th=1&fu=4&q=zoe&it=1",
-    "http://www.leboncoin.fr/voitures/offres/aquitaine/?f=a&th=1&fu=4&q=zoe&it=1"
-]
-versions = ['intens', 'zen', 'life']
-annees = [2012, 2013, 2014]
-
 data_lbc = pd.DataFrame(columns=['Version', 'Année', 'Kilométrage', 'Prix', 'Téléphone', 'Pro'])
 data_cote = pd.DataFrame(columns=['Année', 'Version', 'Cote'])
 
+url_lbc = "http://www.leboncoin.fr/voitures/offres/{region}/?f=a&th=1&fu=4&q=zoe&it=1"
+regions = ['ile_de_france', 'provence_alpes_cote_d_azur', 'aquitaine']
+versions = ['intens', 'zen', 'life']
+annees = [2012, 2013, 2014]
+
 proxies = pd.read_csv('_reliable_list.txt')
 
-
-for url in urls_lbc:
+for region in regions:
+    url = url_lbc.replace('{region}', region)
     r = requests.get(url)
     soup = BeautifulSoup(r.text, 'html.parser')
     ads = soup.findAll('div', {'class': 'lbc'})
@@ -146,7 +141,6 @@ for url in urls_lbc:
             'Téléphone': retrieve_phone_number_desc(soup),
             'Pro': retrieve_pro(soup)
         }, ignore_index=True)
-
 
 url_cote = "http://www.lacentrale.fr/cote-auto-renault-zoe-{version}+charge+rapide-{annee}.html"
 
