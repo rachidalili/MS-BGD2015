@@ -12,7 +12,7 @@ def getSoupFromUrl(url):
   #parse the restult of the request
   soup = BeautifulSoup(request.text, 'html.parser')
   return soup
-  
+
 def getDataFromCss(number):
     data_colonne=soup.findAll("td", { "class" : "montantpetit G" })[number].text
     return data_colonne
@@ -28,17 +28,17 @@ for i in range(0,len(years)):
     tab_indicateur=['A','B','C','D']
     colonne_strate=[]
     colonne_habitant =[]
-    
+
     print ("Euros per capita:")
-    
+
     for i in range (0,len(tab_number_habitant)):
         colonne_habitant.append(getDataFromCss(tab_number_habitant[i]))
         print (tab_indicateur[i], colonne_habitant[i])
 
     print ("Average stratum:")
-    
+
     for i in range (0,len(tab_number_strate)):
         colonne_strate.append(getDataFromCss(tab_number_strate[i]))
         print (tab_indicateur[i], colonne_strate[i])
-        
+
     print ("=====")

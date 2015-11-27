@@ -40,11 +40,11 @@ def extractMetricsFromUrl(url):
   #metrics['dislike_count'] = dislike_count
   metrics['indicator'] = 1000.* (like_count - dislike_count) / view_count
 
-  print '===='
-  print 'Handling ' , soup.title.text
-  print 'The like count is', like_count, ' and dislike ', dislike_count
-  print 'Popularity indicator is ' , metrics['indicator']
-  print '===='
+  print ('====')
+  print ('Handling ') , soup.title.text
+  print ('The like count is', like_count, ' and dislike ', dislike_count)
+  print ('Popularity indicator is ' , metrics['indicator'])
+  print ('====')
   return metrics
 
 
@@ -68,6 +68,3 @@ def getAllMetricsForArtist(artist):
 
 
 rihanna = getAllMetricsForArtist('rihanna')
-
-
-

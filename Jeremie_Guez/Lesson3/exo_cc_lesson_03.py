@@ -17,14 +17,14 @@ def GetInfo(NameProduct):
 	tile = soup.findAll("div", { "class" : "prdtBloc" })
 	for tiles in tile:
 		title=tiles.findAll("div",{"class":"prdtBTit"})[0].text
-		print 'title: ',title
+		print ('title: ',title)
 		for oldPrice in tiles.findAll("div",{"class":"prdtPrSt"}):
-			print 'oldPrice: ',oldPrice.text.encode('utf-8')
+			print ('oldPrice: ',oldPrice.text.encode('utf-8'))
 		newPrice=tiles.findAll("span",{"class":"price"})[0].text
-		print 'newPrice: ',newPrice
+		print ('newPrice: ',newPrice)
 		Des=tiles.findAll("p",{"class":"prdtBDesc"})[0].text
-		print 'Des: ',Des
-		print '========'
+		print ('Des: ',Des)
+		print ('========')
 
 NameProduct='acer aspire'
 NameForm=FromTextToTextWithPlus(NameProduct)
