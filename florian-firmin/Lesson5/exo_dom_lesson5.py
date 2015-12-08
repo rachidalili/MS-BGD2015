@@ -25,3 +25,6 @@ densite_medecin_stack=densite_medecin_stack.rename(columns={'SPECIALITE':'DEPART
 
 comparatif = pd.merge(honoraires,densite_medecin_stack,on=['DEPARTEMENT','SPECIALISTES'])
 print (comparatif.head())
+
+
+

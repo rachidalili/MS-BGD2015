@@ -5,6 +5,11 @@ Created on Sun Oct 18 02:30:35 2015
 @author: florian
 """
 
+"""
+Comme exercice pour mardi prochain je vous demande de crawler 
+le résultat des comptes de la ville de Paris pour les exercices 2009 à 2013
+"""
+
 # coding: utf8
   
 import requests
@@ -38,7 +43,6 @@ for anneeDeCompte in ANNEE:
     soup = getSoupFromUrl(url)
     ListeDesComptesParAnnee ={}
     ListeDesPositionsDansLaPageWeb = {"A":10,"B":14,"C":22,"D":27}
-    
     for LigneDeCompte,NumeroDeCellule in ListeDesPositionsDansLaPageWeb.items():
         ListeDesComptesParAnnee[LigneDeCompte + " par habitant"]=extractionDesComptes(soup,NumeroDeCellule)[0]
         ListeDesComptesParAnnee[LigneDeCompte + " par strate"]=extractionDesComptes(soup,NumeroDeCellule)[1]
