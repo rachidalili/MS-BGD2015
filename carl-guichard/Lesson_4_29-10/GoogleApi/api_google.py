@@ -6,7 +6,6 @@ Created on Thu Oct 29 15:29:46 2015
 """
 
 import pandas as pd
-
 import googlemaps
 
 path = "/Users/Carl/Documents/MyDocuments/Universites/Cours/Telecom_paristech/Git/MS-BGD2015/MS-BGD2015/Lessons-Exercices"
