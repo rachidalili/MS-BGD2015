@@ -1,0 +1,4 @@
+pandas.pivot
+pandas.melt
+pandas value counts
+pandas quantizaton: qcut pd.cut
