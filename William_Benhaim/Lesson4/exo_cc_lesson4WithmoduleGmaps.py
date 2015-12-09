@@ -8,13 +8,16 @@ import re
 from bs4 import BeautifulSoup
 import urllib, json
 import pprint
+import googlemaps
 
+mytoken = 'AIzaSyDWg78VWNp8ROgTUZDt8rKGVXMf9R98p5U'
+gmaps=googlemaps.Client(key=mytoken)
 
 
 cheminCSV = '/Users/williambenhaim/ProjetMSBigData/MS-BGD2015/Lessons-Exercices/villes.csv'
 data = pd.read_csv(cheminCSV, sep=',')
 villes=data['Ville']
-mytoken = 'AIzaSyDWg78VWNp8ROgTUZDt8rKGVXMf9R98p5U'
+
 def extract_value(row):
   return map( lambda x: x['duration']['text'], row['elements'])
 

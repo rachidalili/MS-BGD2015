@@ -15,12 +15,15 @@ def recupKM(txt):
 	return int(txt.replace(u'KM', u'').replace(u'\nKilom\xe9trage :', u'').replace(' ',''))
 
 def typeversion(Alldes):
-    if 'ZEN' in Alldes.text or 'Zen' in Alldes.text or 'zen' in Alldes.text:
-    	return 'ZEN'
-    if  'Life' in Alldes.text or 'LIFE' in Alldes.text or 'life' in Alldes.text:
-    	return 'LIFE'
-    if 'INTENS' in Alldes.text or 'Intens' in Alldes.text or 'intens' in Alldes.text:
-    	return 'INTENS'
+	expreZEN=r'(Z|z)(E|e)(N|n)'
+	expreLIFE=r'(L|l)(I|i)(F|f)(E|e)'
+	expreINTENS=r'(I|i)(n|N)(T|t)(E|e)(N|n)(S|s)'
+	if re.search(expreZEN,Alldes.text):
+		return 'ZEN'
+	if re.search(expreLIFE,Alldes.text):
+		return 'LIFE'
+	if re.search(expreINTENS,Alldes.text):
+		return 'INTENS'
 
 
 def coteLacentrale(modele,annee):
@@ -74,9 +77,6 @@ def GetInformation(url_zoe,str_name_region):
 		phone='NA'
 	return str_name_region,version,annee,typevendeur,phone,km,prix,cote,CompareCoteToprice
 
-def isZoe(libelle):
-	return "Zo" in libelle or "zo" in libelle or "ZO" in libelle
-
 
 def LeBonCoinZoe(listregion):
 	listcar=[]
@@ -89,8 +89,8 @@ def LeBonCoinZoe(listregion):
 		bloc_all_cars= soup.find('div', { 'class' : 'list-lbc' })
 		cars = bloc_all_cars.findAll('a')
 		for car in cars:
-			
-			if isZoe(car['title']):
+			expreZo=r'(Z|z)(O|o)'
+			if re.search(expreZo,(car['title'])):
 				url_zoe=car['href']
 				listcar.append(GetInformation(url_zoe,str_name_region))
 
@@ -101,6 +101,4 @@ listregion=['ile_de_france','aquitaine','provence_alpes_cote_d_azur']
 listALL=LeBonCoinZoe(listregion)
 
 Result_DF = pd.DataFrame(listALL, columns=listInfo)
-print Result_DF
-Result_DF[]
 
