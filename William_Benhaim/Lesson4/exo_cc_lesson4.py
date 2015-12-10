@@ -1,4 +1,4 @@
-from sklearn import linear_model                  
+from sklearn import linear_model
 import numpy as np
 import pandas
 import requests
