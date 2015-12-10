@@ -1,0 +1,265 @@
+Ville,Département
+Paris,Paris
+Marseille,Bouches-du-Rhône
+Lyon,Métropole de Lyon
+Toulouse,Haute-Garonne
+Nice,Alpes-Maritimes
+Nantes,Loire-Atlantique
+Strasbourg,Bas-Rhin
+Montpellier,Hérault
+Bordeaux,Gironde
+Lille13,Nord
+Rennes,Ille-et-Vilaine
+Reims,Marne
+Le Havre,Seine-Maritime
+Saint-Étienne,Loire
+Toulon,Var
+Grenoble,Isère
+Dijon,Côte-d'Or
+Angers,Maine-et-Loire
+Nîmes,Gard
+Villeurbanne,Métropole de Lyon
+Saint-Denis,La Réunion
+Le Mans,Sarthe
+Clermont-Ferrand,Puy-de-Dôme
+Aix-en-Provence,Bouches-du-Rhône
+Brest,Finistère
+Limoges,Haute-Vienne
+Tours,Indre-et-Loire
+Amiens,Somme
+Perpignan,Pyrénées-Orientales
+Metz,Moselle
+Boulogne-Billancourt,Hauts-de-Seine
+Besançon,Doubs
+Orléans,Loiret
+Rouen,Seine-Maritime
+Mulhouse,Haut-Rhin
+Caen,Calvados
+Saint-Denis,Seine-Saint-Denis
+Nancy,Meurthe-et-Moselle
+Argenteuil,Val-d'Oise
+Saint-Paul,La Réunion
+Montreuil,Seine-Saint-Denis
+Roubaix,Nord
+Tourcoing,Nord
+Dunkerque14,Nord
+Nanterre,Hauts-de-Seine
+Créteil,Val-de-Marne
+Avignon,Vaucluse
+Vitry-sur-Seine,Val-de-Marne
+Poitiers,Vienne
+Courbevoie,Hauts-de-Seine
+Fort-de-France,Martinique
+Versailles,Yvelines
+Colombes,Hauts-de-Seine
+Asnières-sur-Seine,Hauts-de-Seine
+Aulnay-sous-Bois,Seine-Saint-Denis
+Saint-Pierre,La Réunion
+Rueil-Malmaison,Hauts-de-Seine
+Pau,Pyrénées-Atlantiques
+Aubervilliers,Seine-Saint-Denis
+Champigny-sur-Marne,Val-de-Marne
+Le Tampon,La Réunion
+Antibes,Alpes-Maritimes
+Saint-Maur-des-Fossés,Val-de-Marne
+La Rochelle,Charente-Maritime
+Cannes,Alpes-Maritimes
+Béziers,Hérault
+Calais,Pas-de-Calais
+Saint-Nazaire,Loire-Atlantique
+Colmar,Haut-Rhin
+Drancy,Seine-Saint-Denis
+Bourges,Cher
+Mérignac,Gironde
+Ajaccio,Corse-du-Sud
+Issy-les-Moulineaux,Hauts-de-Seine
+Levallois-Perret,Hauts-de-Seine
+La Seyne-sur-Mer,Var
+Quimper,Finistère
+Noisy-le-Grand,Seine-Saint-Denis
+Valence,Drôme
+Villeneuve-d'Ascq,Nord
+Neuilly-sur-Seine,Hauts-de-Seine
+Antony,Hauts-de-Seine
+Vénissieux,Métropole de Lyon
+Cergy,Val-d'Oise
+Troyes,Aube
+Clichy,Hauts-de-Seine
+Pessac,Gironde
+Les Abymes,Guadeloupe
+Ivry-sur-Seine,Val-de-Marne
+Chambéry,Savoie
+Lorient,Morbihan
+Niort,Deux-Sèvres
+Sarcelles,Val-d'Oise
+Montauban,Tarn-et-Garonne
+Villejuif,Val-de-Marne
+Saint-Quentin,Aisne
+Hyères,Var
+Cayenne,Guyane
+Épinay-sur-Seine,Seine-Saint-Denis
+Saint-André,La Réunion
+Beauvais,Oise
+Maisons-Alfort,Val-de-Marne
+Cholet,Maine-et-Loire
+Meaux,Seine-et-Marne
+Chelles,Seine-et-Marne
+Pantin,Seine-Saint-Denis
+Fontenay-sous-Bois,Val-de-Marne
+La Roche-sur-Yon,Vendée
+Bondy,Seine-Saint-Denis
+Vannes,Morbihan
+Saint-Louis,La Réunion
+Fréjus,Var
+Arles,Bouches-du-Rhône
+Clamart,Hauts-de-Seine
+Évry,Essonne
+Le Blanc-Mesnil,Seine-Saint-Denis
+Narbonne,Aude
+Sartrouville,Yvelines
+Grasse,Alpes-Maritimes
+Annecy,Haute-Savoie
+Laval,Mayenne
+Belfort,Territoire de Belfort
+Vincennes,Val-de-Marne
+Charleville-Mézières,Ardennes
+Évreux,Eure
+Sevran,Seine-Saint-Denis
+Albi,Tarn
+Montrouge,Hauts-de-Seine
+Bobigny,Seine-Saint-Denis
+Martigues,Bouches-du-Rhône
+Saint-Ouen,Seine-Saint-Denis
+Brive-la-Gaillarde,Corrèze
+Suresnes,Hauts-de-Seine
+Carcassonne,Aude
+Cagnes-sur-Mer,Alpes-Maritimes
+Corbeil-Essonnes,Essonne
+Saint-Brieuc,Côtes-d'Armor
+Blois,Loir-et-Cher
+Bayonne,Pyrénées-Atlantiques
+Aubagne,Bouches-du-Rhône
+Châlons-en-Champagne,Marne
+Meudon,Hauts-de-Seine
+Châteauroux,Indre
+Saint-Malo,Ille-et-Vilaine
+Chalon-sur-Saône,Saône-et-Loire
+Sète,Hérault
+Puteaux,Hauts-de-Seine
+Alfortville,Val-de-Marne
+Salon-de-Provence,Bouches-du-Rhône
+Massy,Essonne
+Mantes-la-Jolie,Yvelines
+Bastia,Haute-Corse
+Vaulx-en-Velin,Métropole de Lyon
+Saint-Herblain,Loire-Atlantique
+Le Cannet,Alpes-Maritimes
+Valenciennes,Nord
+Istres,Bouches-du-Rhône
+Gennevilliers,Hauts-de-Seine
+Boulogne-sur-Mer,Pas-de-Calais
+Livry-Gargan,Seine-Saint-Denis
+Saint-Priest,Métropole de Lyon
+Rosny-sous-Bois,Seine-Saint-Denis
+Caluire-et-Cuire,Métropole de Lyon
+Angoulême,Charente
+Douai,Nord
+Tarbes,Hautes-Pyrénées
+Wattrelos,Nord
+Castres,Tarn
+Choisy-le-Roi,Val-de-Marne
+Talence,Gironde
+Thionville,Moselle
+Arras,Pas-de-Calais
+Alès,Gard
+Garges-lès-Gonesse,Val-d'Oise
+Gap,Hautes-Alpes
+Saint-Laurent-du-Maroni,Guyane
+Melun,Seine-et-Marne
+Bourg-en-Bresse,Ain
+Noisy-le-Sec,Seine-Saint-Denis
+Compiègne,Oise
+La Courneuve,Seine-Saint-Denis
+Le Lamentin,Martinique
+Marcq-en-Barœul,Nord
+Saint-Germain-en-Laye,Yvelines
+Rezé,Loire-Atlantique
+Bron,Métropole de Lyon
+Anglet,Pyrénées-Atlantiques
+Gagny,Seine-Saint-Denis
+Chartres,Eure-et-Loir
+Bagneux,Hauts-de-Seine
+Saint-Martin-d'Hères,Isère
+Montluçon,Allier
+Pontault-Combault,Seine-et-Marne
+Poissy,Yvelines
+Draguignan,Var
+Joué-lès-Tours,Indre-et-Loire
+Savigny-sur-Orge,Essonne
+Cherbourg-Octeville,Manche
+Saint-Joseph,La Réunion
+Le Port,La Réunion
+Colomiers,Haute-Garonne
+Saint-Martin,Saint-Martin est une COM autonome
+Villefranche-sur-Saône,Rhône
+Stains,Seine-Saint-Denis
+Saint-Benoît,La Réunion
+Échirolles,Isère
+Villepinte,Seine-Saint-Denis
+Roanne,Loire
+Montélimar,Drôme
+Saint-Chamond,Loire
+Nevers,Nièvre
+Conflans-Sainte-Honorine,Yvelines
+Auxerre,Yonne
+Sainte-Geneviève-des-Bois,Essonne
+Châtillon,Hauts-de-Seine
+Bagnolet,Seine-Saint-Denis
+Vitrolles,Bouches-du-Rhône
+Thonon-les-Bains,Haute-Savoie
+Neuilly-sur-Marne,Seine-Saint-Denis
+Haguenau,Bas-Rhin
+Marignane,Bouches-du-Rhône
+Saint-Raphaël,Var
+Tremblay-en-France,Seine-Saint-Denis
+La Ciotat,Bouches-du-Rhône
+Six-Fours-les-Plages,Var
+Creil,Oise
+Agen,Lot-et-Garonne
+Romans-sur-Isère,Drôme
+Montigny-le-Bretonneux,Yvelines
+Le Perreux-sur-Marne,Val-de-Marne
+Franconville,Val-d'Oise
+Annemasse,Haute-Savoie
+Villeneuve-Saint-Georges,Val-de-Marne
+Saint-Leu,La Réunion
+Mâcon,Saône-et-Loire
+Cambrai,Nord
+Lens,Pas-de-Calais
+Houilles,Yvelines
+Épinal,Vosges
+Châtenay-Malabry,Hauts-de-Seine
+Schiltigheim,Bas-Rhin
+Sainte-Marie,La Réunion
+Liévin,Pas-de-Calais
+Châtellerault,Vienne
+Meyzieu,Métropole de Lyon
+Goussainville,Val-d'Oise
+Viry-Châtillon,Essonne
+Dreux,Eure-et-Loir
+L'Haÿ-les-Roses,Val-de-Marne
+Plaisir,Yvelines
+Mont-de-Marsan,Landes
+Maubeuge,Nord
+Nogent-sur-Marne,Val-de-Marne
+Les Mureaux,Yvelines
+Clichy-sous-Bois,Seine-Saint-Denis
+La Possession,La Réunion
+Dieppe,Seine-Maritime
+Chatou,Yvelines
+Vandœuvre-lès-Nancy,Meurthe-et-Moselle
+Malakoff,Hauts-de-Seine
+Palaiseau,Essonne
+Pontoise,Val-d'Oise
+Charenton-le-Pont,Val-de-Marne
+Rillieux-la-Pape,Métropole de Lyon

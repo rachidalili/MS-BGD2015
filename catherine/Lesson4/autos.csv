@@ -1,0 +1,16 @@
+,region,version,annee,kilometrage,categorie,telephone,prix,prix_argus
+0,aquitaine,zen,2013.0,30000.0,Particulier,,10000.0,10700.0
+1,aquitaine,,2013.0,11000.0,Particulier,,12000.0,-1.0
+2,aquitaine,zen,2013.0,14000.0,Particulier,,12500.0,10700.0
+3,provence_alpes_cote_d_azur,life,2015.0,3.0,Professionel,,13990.0,0.0
+4,provence_alpes_cote_d_azur,zen,2013.0,39193.0,Professionel,,13800.0,10700.0
+5,ile_de_france,life,2014.0,18032.0,Professionel,,12890.0,12000.0
+6,ile_de_france,intens,2014.0,12000.0,Particulier,,13500.0,13800.0
+7,ile_de_france,zen,2013.0,16515.0,Professionel,,10990.0,10700.0
+8,ile_de_france,life,2014.0,3299.0,Professionel,,12990.0,12000.0
+9,ile_de_france,intens,2015.0,235.0,Professionel,,17900.0,0.0
+10,ile_de_france,life,2013.0,26454.0,Professionel,,8990.0,10400.0
+11,ile_de_france,intens,2013.0,28317.0,Professionel,,10690.0,11100.0
+12,ile_de_france,intens,2013.0,15310.0,Professionel,,12490.0,11100.0
+13,ile_de_france,life,2013.0,23874.0,Professionel,,8990.0,10400.0
+14,ile_de_france,zen,2014.0,6500.0,Professionel,,12990.0,12400.0
