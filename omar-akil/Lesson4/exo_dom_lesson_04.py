@@ -1,16 +1,17 @@
-
 import re
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
+#donnees
+url='http://www.leboncoin.fr/voitures/offres/bretagne/?f=a&th=1&q=Renault+Zo%C3%A9'
+urlcote='http://www.lacentrale.fr/cote-auto-renault-zoe-'
+
+# fonctions
 def getContentFromUrl(url):
 	r = requests.get(url)
-	s = BeautifulSoup(request.text, 'html.parser')
-	return soup
-
-
-url='http://www.leboncoin.fr/voitures/offres/ile_de_france/?f=a&th=1&q=Renault+Zo%C3%A9'
+	s = BeautifulSoup(r.text, 'html.parser')
+	return s
 
 def getLienFromUrl(url):
     s = getContentFromUrl(url);
@@ -22,12 +23,10 @@ def getLienFromUrl(url):
         list_lien.append(lien)
     return list_lien
 
-list_lien=getLienFromUrl(url)
-
-def getVersionFromSoup(sl):
-    co=str(sl.find("div", { "class" : "content" }))
-    searchVersion = re.search( r'intens|life|zen', content, re.M|re.I)
-    if not(searchRenault is None):
+def getVersionFromSoup(s):
+    c=str(s.find("div", { "class" : "content" }))
+    searchVersion = re.search( r'intens|life|zen', c, re.M|re.I)
+    if not(searchVersion is None):
         version=(searchVersion.group()).lower()
     else:
         version="version non identifiée"
@@ -42,65 +41,64 @@ def getDateFromSoup(s):
     return str(int(release_date))
 
 def getKmFromSoup(s):
-    km_dirty=s.find("div", { "class" : "lbcParams criterias" }).findAll("td")[3].string
-    km=km_dirty.replace(" ","").replace("KM","")
+    km_1=s.find("div", { "class" : "lbcParams criterias" }).findAll("td")[3].string
+    km=km_1.replace(" ","").replace("KM","")
     return km
 
 def getSellerFromSoup(s):
     param=s.find("div", { "class" : "upload_by" }).find("span", { "class" : "ad_pro" })
     if param is None:
-        seller='particulier'
+        vendeur='Particulier'
     else:
-        seller='professionnel'
-    return seller
+        vendeur='Professionnel'
+    return vendeur
 
 def getCoteFromVersionDate(version,date):
         no_decimal = re.compile(r'[^\d.]+')
-        url_cote='http://www.lacentrale.fr/cote-auto-renault-zoe-'+version+'+charge+rapide-'+date+'.html'
-        soup_1=getContentFromUrl(url_cote)
-        cote_1=soup_1.find("span", { "class" : "Result_Cote arial tx20" }).string
-        return(no_decimal.sub('', cote_dirty))
+        url_cote=urlcote+version+'+charge+rapide-'+date+'.html'
+        soup=getContentFromUrl(url_cote)
+        cote=soup.find("span", { "class" : "Result_Cote arial tx20" }).string
+        return(no_decimal.sub('', cote))
     
+result=[]
 
+# traitement
+list_liens=getLienFromUrl(url)
 
-
-
-result_search=[]
-
-for lien in list_lien:
+for lien in list_liens:
     
-    sl=getContentFromUrl(lien)
-    titre=str(sl.find("div", { "class" : "header_adview" }))    
-    searchRenault = re.search( r'renault|zoe|zoé', titre, re.M|re.I)
+    s=getContentFromUrl(lien)
+    titre=str(s.find("div", { "class" : "header_adview" }))    
+    searchZ = re.search( r'renault|zoe|zoé', titre, re.M|re.I)
     
-    if not(searchRenault is None):
+    if not(searchZ is None):
         
-        version=getVersionFromSoup(sl)
-        price=getPriceFromSoup(sl)
-        km=getKmFromSoup(sl)
-        date=getDateFromSoup(sl)
-        seller=getSellerFromSoup(sl)
+        version=getVersionFromSoup(s)
+        price=getPriceFromSoup(s)
+        km=getKmFromSoup(s)
+        date=getDateFromSoup(s)
+        seller=getSellerFromSoup(s)
         cote=getCoteFromVersionDate(version,date)
-
         
-        for i in range(len(versions)):
-            if(version==versions[i]):
-                cote=cotes[i]
+        for i in range(len(version)):
+            if(version==version[i]):
+                cote=cote[i]
                 
             if price>cote:
-                commentaire='oui'
+                comparaison='oui'
             elif price<cote:
-                commentaire='non'
+                comparaison='non'
             else:
-                commentaire='égal'
-                
-        
-        info=[version,price,km,date,seller,cote,commentaire]
-        result_search.append(info)
+                comparaison='égal'
+                     
+        resu=[version,price,km,date,seller,cote,comparaison]
+        result.append(resu)
     
-df = pd.DataFrame(result_search)
-df.columns = ['version', 'prix (euros)','kilométrage','année','type de vendeur','cote','prix > cote ?']
-df
+df = pd.DataFrame(result)
+df.columns = ['version', 'prix','km','année','vendeur','cote','prix sup cote ']
+print("  En Bretagne, voici la liste des voitures Renault Zoe en vente")
+print(df)
+
 
 
     
