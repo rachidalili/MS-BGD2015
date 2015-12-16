@@ -7,7 +7,7 @@ import re
 from getpass import getpass
 
 token='346cec39d6709191db203e4a85864b469fe497f7'
-rqHeader = {"Authorization": "token "+my_token}
+rqHeader = {"Authorization": "token "+token}
 #
 # Connect to github api using token
 #

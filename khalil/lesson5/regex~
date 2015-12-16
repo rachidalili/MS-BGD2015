@@ -1,0 +1,4 @@
+methods:
+ - match: look from the begininning of a string
+ - search: look for all patterns in a string
+ - 

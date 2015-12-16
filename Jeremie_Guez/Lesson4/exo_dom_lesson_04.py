@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 import requests
-import urllib2
 import re
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -17,10 +16,10 @@ def retrieve_phone_number_ocr(soup):
     if node is not None:
         params = re.findall(r'\(.*, (\d+), \"(.+)\"\)', node.find('a')['href'])
         # Appel à l'API de LBC pour récupérer l'url du gif du numéro de téléphone
-        print u'   --> extraction du numéro (wait 5 seconds)'
+        print (u'   --> extraction du numéro (wait 5 seconds)')
         time.sleep(5)  # 5 seconds
         proxy = 'http://' + proxies.iloc[random.randrange(len(proxies))].values[0]
-        print u'   --> extraction du numéro (random proxy): ' + proxy
+        print (u'   --> extraction du numéro (random proxy): ' + proxy)
         r = requests.post(
             'https://api.leboncoin.fr/api/utils/phonenumber.json',
             {
@@ -39,7 +38,7 @@ def retrieve_phone_number_ocr(soup):
             })
         # Si le JSON contient un status OK alors on continue
         # si le status est KO, on vient de se faire bloquer (ça va très vite, malgré le proxy aléatoire)
-        print u'   --> extraction du numéro (status): ' + r.json()['utils']['status']
+        print (u'   --> extraction du numéro (status): ' + r.json()['utils']['status'])
         if r.json()['utils']['status'] == 'OK':
             # On télécharge le gif du numéro et on l'écrit en local
             gif_url = r.json()['utils']['phonenumber']
@@ -135,7 +134,7 @@ for url in urls_lbc:
     ads = soup.findAll('div', {'class': 'lbc'})
     for ad in ads:
         ad_url = ad.parent['href']
-        print 'Annonce: ' + ad_url
+        print ('Annonce: ' + ad_url)
         r = requests.get(ad_url)
         soup = BeautifulSoup(r.text, 'html.parser')
         data_lbc = data_lbc.append({
@@ -154,7 +153,7 @@ for annee in annees:
     for version in versions:
         url = url_cote.replace('{version}', version)
         url = url.replace('{annee}', str(annee))
-        print 'Cote: ' + url
+        print ('Cote: ' + url)
         r = requests.get(url)
         soup = BeautifulSoup(r.text, 'html.parser')
         cote = float(re.sub(r'\D', '', soup.find('span', {'class': 'Result_Cote'}).get_text()))
@@ -172,4 +171,4 @@ data_merged = data_merged.reset_index()
 data_merged['Delta'] = data_merged['Delta'].map('{:,.1f}%'.format)
 data_merged.to_csv('zoe.csv', sep='\t')
 
-print data_merged
+print (data_merged)

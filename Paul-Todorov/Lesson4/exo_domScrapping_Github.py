@@ -1,0 +1,47 @@
+import requests
+import re
+from bs4 import BeautifulSoup
+import json
+import pandas as pd
+from getpass import getpass
+
+#Return soup from url
+def getSoupFromUrl(url):
+  request = requests.get(url)
+  soup = BeautifulSoup(request.text, 'html.parser')
+  return soup
+
+def auth() :
+	username = input('GitHub username:')
+	password = getpass()
+	return username,password
+
+def get_mean_score_for_contrib(contrib,username,password):
+	nb_star =0.0
+	nb_project=0.0
+	user_url = "https://api.github.com/users/" + contrib + "/repos"
+	json = requests.get(url=user_url, auth=(username,password)).json()
+	for project in json:
+			nb_star += project['stargazers_count']
+			nb_project += 1
+	return nb_star / nb_project
+
+
+def get_sorted_score_for_all_contribs():
+	df = pd.DataFrame(columns=['contrib', 'nb_star'])
+	username, password = auth()
+	url = 'https://gist.github.com/paulmillr/2657075'
+	soup = getSoupFromUrl(url)
+	line = 0
+	for contrib in soup.select("tr > td:nth-of-type(1) > a"):
+		score = get_mean_score_for_contrib(contrib.text, username, password)
+		print(str(line) + " " + contrib.text + " " + str(score))
+		#Add in panda dataframe
+		df = df.append(pd.Series({'contrib':contrib.text,'nb_star':score}, index=['contrib', 'nb_star']), ignore_index=True)
+		line += 1
+	#sort panda dataframe
+	sorted_list = df.sort('nb_star', ascending=False)
+	return(sorted_list)
+
+result = get_sorted_score_for_all_contribs()
+print result

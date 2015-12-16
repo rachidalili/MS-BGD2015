@@ -11,24 +11,24 @@ import pprint
 
 
 
-def connectWithToken():
-    request = requests.get(github_api_url + "/user", headers=rqHeader)
-    return request.status_code
-
 cheminCSV = '/Users/williambenhaim/ProjetMSBigData/MS-BGD2015/Lessons-Exercices/villes.csv'
 data = pd.read_csv(cheminCSV, sep=',')
 villes=data['Ville']
 mytoken = 'AIzaSyDWg78VWNp8ROgTUZDt8rKGVXMf9R98p5U'
+def extract_value(row):
+  return map( lambda x: x['duration']['text'], row['elements'])
 
-
+alldistance=[]
+distance=[]
+ville=[]
 for villeA in villes[0:10]:
+	distance=[]
 	for villeB in villes[0:10]:
-		tt=1
-mapp = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=Paris&destinations=Poitier&mode=bicycling&language=fr-FR&key=AIzaSyDWg78VWNp8ROgTUZDt8rKGVXMf9R98p5U'
+		mapp = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins='+villeA+'&destinations='+villeB+'&language=fr-FR&key='+mytoken
+		googleResponse = urllib.urlopen(mapp)
+		jsonResponse = json.loads(googleResponse.read())
+		distance.append(jsonResponse['rows'][0]['elements'][0]['distance']['value'])
+	alldistance.append(distance)
+	ville.append(villeA)
 
-googleResponse = urllib.urlopen(mapp)
-jsonResponse = json.loads(googleResponse.read())
-#mapp = 'https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal&key=' + mytoken
-resp = requests.get(mapp)
-datta = json.loads(resp.text)
-datta= datta['rows']
+Result_DF = pd.DataFrame(alldistance, columns=ville,index=ville)

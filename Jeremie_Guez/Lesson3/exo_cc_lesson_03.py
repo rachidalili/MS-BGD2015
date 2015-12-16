@@ -15,6 +15,7 @@ def GetInfo(NameProduct):
 	#print(url)
 	soup = GetSoupFromUrl(url)
 	tile = soup.findAll("div", { "class" : "prdtBloc" })
+	print 'tile',tile
 	for tiles in tile:
 		title=tiles.findAll("div",{"class":"prdtBTit"})[0].text
 		print ('title: ',title)

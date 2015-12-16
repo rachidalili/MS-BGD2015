@@ -4,7 +4,10 @@ Created on Thu Oct 29 01:31:46 2015
 
 @author: florian
 """
-
+"""
+ Récupérer via crawling la liste des 256 top contributors 
+ sur cette page https://gist.github.com/paulmillr/2657075 
+"""
 import requests
 from bs4 import BeautifulSoup
 import json

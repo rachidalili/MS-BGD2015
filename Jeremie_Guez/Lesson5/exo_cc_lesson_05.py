@@ -7,7 +7,7 @@ url = 'http://base-donnees-publique.medicaments.gouv.fr/index.php'
 result = pd.DataFrame(columns=['Medicament', 'Dosage', 'Unite', 'Prescription'])
 
 for page in range(1, 3):
-    print 'page ' + str(page)
+    print ('page ' + str(page))
     r = requests.post(url, {
         "page": page,
         "affliste": 0,
@@ -30,9 +30,9 @@ for page in range(1, 3):
     for a in links:
         text = a.get_text()
         tokens = re.findall(r'(.*)\s(\d{2,4})\s(mg?)(?:\/\d+ mg?)?\s?(.*),\s(\S*)', text)
-        print tokens
+        print (tokens)
         if len(tokens) > 0 and len(tokens[0]) >= 3:
-            print tokens
+            print (tokens)
             result = result.append({
                 'Medicament': (tokens[0][0] + ' ' + tokens[0][3]).strip(),
                 'Dosage': int(tokens[0][1]),
@@ -40,4 +40,4 @@ for page in range(1, 3):
                 'Prescription': tokens[0][4].strip()
             }, ignore_index=True)
 
-print result
+print (result)
